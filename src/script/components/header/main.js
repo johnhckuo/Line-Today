@@ -18,7 +18,7 @@ export default class Header extends React.Component{
                 id = "";
               }
 
-              return <Link key={key} to={`/${id}`}><span className="link">{category.name}</span></Link>
+              return <Link key={key} to={`/category/${id}`}><span className="link">{category.name}</span></Link>
             })
           }
         </header>

@@ -7,6 +7,10 @@ export default class Category extends React.Component{
     super(props);
   }
 
+  componentDidMount(){
+    console.log(this.props.location.pathname)
+  }
+
   render(){
     return (
         <div>
