@@ -22,7 +22,12 @@ module.exports = {
     }, {
       test: /\.css/,
       loader: ExtractTextPlugin.extract('style', 'css', 'postcss')
-    }, {
+    }, 
+    {
+      test: /\.scss$/,
+      loader: ExtractTextPlugin.extract('style', 'css', 'sass')
+    },
+    {
       test: /\.(png|jpg)$/,
       loader: 'url?limit=25000'
     }, {

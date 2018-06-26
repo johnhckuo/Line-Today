@@ -5,6 +5,7 @@ import { BrowserRouter } from 'react-router-dom'
 import Main from "./components/main"
 import "../style/reset.css"
 import "../style/global.scss"
+import "../style/style.scss"
 
 const app = document.getElementById('app')
 

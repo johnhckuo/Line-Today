@@ -1,8 +1,6 @@
 import React from "react"
 import { Link } from 'react-router-dom'
 
-import * as Style from "./style"
-
 export default class Header extends React.Component{
 
   constructor(props){
@@ -10,11 +8,20 @@ export default class Header extends React.Component{
   }
 
   render(){
+    var {categoryList} = this.props;
     return (
-        <Style.Container>
-          <Link to="/"><Style.Link>Headline</Style.Link></Link>
-          <Link to="/category"><Style.Link>Category</Style.Link></Link>
-        </Style.Container>
+        <header className = "header__container">
+          {
+            categoryList.map((category, key)=>{
+              var id = category.id;
+              if (key == 0){
+                id = "";
+              }
+
+              return <Link key={key} to={`/${id}`}><span className="link">{category.name}</span></Link>
+            })
+          }
+        </header>
     );
   }
 }
