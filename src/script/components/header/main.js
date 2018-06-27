@@ -1,41 +1,72 @@
 import React from "react"
 import { Link } from 'react-router-dom'
-import mainimg from '../../../images/mainimg.png'
 import styleVar from '../../../style/utilities/variables.scss'
+
 
 export default class Header extends React.Component{
 
   constructor(props){
     super(props);
+    this.generateNavList = this.generateNavList.bind(this);
+    this.generateMoreList = this.generateMoreList.bind(this);
+  }
+
+  generateNavList(categoryList, maxItems){
+
+    var navList = [];
+
+    //visible categories
+    for (var i = 0 ; i < categoryList.length ; i++){
+      var category = categoryList[i]
+      var id = category.id;
+      if (i >= maxItems){
+        break;
+      }
+      if (i == 0){
+        id = "";
+      }
+      navList.push(<li className="visible_link"><Link key={i} to={`/category/${id}`}>{category.name}</Link></li>);
+    }
+
+    return navList;
+  }
+
+  generateMoreList(categoryList, startIndex){
+    //remain categories
+    var moreList = [];
+    for (var j = startIndex ; j < categoryList.length ; j++){
+      var category = categoryList[j]
+      var id = category.id;
+      moreList.push(<li><Link key={j} to={`/category/${id}`}>{category.name}</Link></li>);
+    }
+    return moreList;
   }
 
   render(){
     const {categoryList, windowWidth} = this.props;
-    const {header_item_width, mobile_width} = styleVar;
-    var maxItems = windowWidth / header_item_width;
-    console.log(maxItems)
+    const header_item_width = parseInt(styleVar.header_item_width);
+    var maxItems = parseInt(windowWidth / 3);
+    maxItems = parseInt(maxItems / (header_item_width + 16*2))
+    var navList = this.generateNavList(categoryList, maxItems);
+    var moreList = this.generateMoreList(categoryList, navList.length);
+
     return (
         <header className = "header__container">
-          <h1>
-            <a>
-              <img src={mainimg} />
-              <span className="hidden">Line Today</span>
-            </a>
-          </h1>
           <nav>
             <ul>
-            {
-              categoryList.map((category, key)=>{
-                var id = category.id;
-                if (key == 0){
-                  id = "";
-                }
-
-                return <li className="link"><Link key={key} to={`/category/${id}`}>{category.name}</Link></li>
-              })
-            }
+            <li><h1><Link to='/'>Line Today</Link></h1></li>
+              {navList}
+              <li className="visible_link more">
+                <Link to='#'>更多<span className="icon_more"></span></Link>
+                <ul>
+                  {moreList}
+                </ul>
+              </li>
             </ul>
           </nav>
+          <div className="login_button">
+            <a href="#">登入</a>
+          </div>
         </header>
     );
   }
