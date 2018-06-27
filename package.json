@@ -8,10 +8,6 @@
     "build:prod": "webpack -p",
     "dev": "webpack-dev-server --devtool eval --progress --colors --content-base build"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/johnhckuo/Line-Today.git"
-  },
   "keywords": [
     "react"
   ],
@@ -21,7 +17,6 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "axios": "^0.18.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
@@ -42,9 +37,5 @@
     "url-loader": "^0.6.2",
     "webpack": "^3.10.0",
     "webpack-dev-server": "^2.11.0"
-  },
-  "bugs": {
-    "url": "https://github.com/johnhckuo/Line-Today/issues"
-  },
-  "homepage": "https://github.com/johnhckuo/Line-Today#readme"
+  }
 }
