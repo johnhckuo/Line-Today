@@ -25,7 +25,7 @@ export default class Header extends React.Component{
       if (i == 0){
         id = "";
       }
-      navList.push(<li className="visible_link"><Link key={i} to={`/category/${id}`}>{category.name}</Link></li>);
+      navList.push(<li className="header__visible-link"><Link key={i} to={`/category/${id}`}>{category.name}</Link></li>);
     }
 
     return navList;
@@ -51,20 +51,20 @@ export default class Header extends React.Component{
     var moreList = this.generateMoreList(categoryList, navList.length);
 
     return (
-        <header className = "header__container">
+        <header className = "header">
           <nav>
-            <ul>
-            <li><h1><Link to='/'>Line Today</Link></h1></li>
+            <ul className="header__visible-list">
+              <li><h1><Link to='/'>Line Today</Link></h1></li>
               {navList}
-              <li className="visible_link more">
-                <Link to='#'>更多<span className="icon_more"></span></Link>
-                <ul>
+              <li className="header__visible-link header__more">
+                <Link to='#'>更多<span className="header__icon-more"></span></Link>
+                <ul className="header__collapse-list">
                   {moreList}
                 </ul>
               </li>
             </ul>
           </nav>
-          <div className="login_button">
+          <div className="header__login-button">
             <a href="#">登入</a>
           </div>
         </header>

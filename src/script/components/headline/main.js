@@ -13,28 +13,25 @@ export default class Headline extends React.Component{
     if (typeof category == "undefined"){
       return null;
     }
-    console.log()
     return(
-      <div className="headline__container">
-        Head line
-        <div className="digest">
-        {
-          category.templates[0].sections.map((section)=>{
-            section.articles.map((article, index)=>{
-
-              console.log(article.title)
-            })
-
-
-          })
-        }
-          <div className="image-swiper">
+      <div className="headline">
+        <div className="headline__digest">
+          <div className="headline__image-swiper">
             <ul>
-              <li><a><img /></a></li>
+            {
+              category.templates[0].sections.map((section)=>{
+                return section.articles.map((article, index)=>{
+                  return (
+                        <li><a><img src={this.imagePrefix + article.thumbnail.hash + this.imagePostfix}/></a></li>
+                  );
+                })
+              })
+            }
             </ul>
           </div>
+
           <div>
-            <h2></h2>
+            <h2>hi</h2>
             <p></p>
             <div></div>
           </div>
