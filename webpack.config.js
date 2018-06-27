@@ -11,7 +11,7 @@ var extractPlugin = new ExtractTextPlugin({
 module.exports = {
   entry: path.join(__dirname, 'src', 'script', 'index.js'),
   output: {
-    path: path.join(__dirname, 'demo'),
+    path: path.join(__dirname, 'docs'),
     filename: 'bundle.js'
   },
   plugins: [
@@ -19,7 +19,7 @@ module.exports = {
       template: 'src/index.html'
     }),
     extractPlugin,
-    new CleanWebpackPlugin(['demo'])
+    new CleanWebpackPlugin(['docs'])
   ],
   module: {
     loaders: [

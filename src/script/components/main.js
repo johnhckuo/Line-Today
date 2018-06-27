@@ -29,6 +29,26 @@ export default class Main extends React.Component{
     //   this.categoryList = this.raw.result.categoryList;
     //   this.setState({currentCategory: this.categoryList[0].id});
     // });
+
+    fetch('https://today.line.me/tw/portaljson', {mode: 'no-cors'})
+    .then(
+      function(response) {
+        if (response.status !== 200) {
+          console.log('Looks like there was a problem. Status Code: ' +
+            response.status);
+          return;
+        }
+
+        // Examine the text in the response
+        response.json().then(function(data) {
+          console.log(data);
+        });
+      }
+    )
+    .catch(function(err) {
+      console.log('Fetch Error :-S', err);
+    });
+  
     this.raw = data;
     this.categoryList = this.raw.result.categoryList;
     this.categories = this.raw.result.categories;
