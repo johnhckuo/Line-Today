@@ -9,6 +9,7 @@ export default class Headline extends React.Component{
     this.loadDigest = this.loadDigest.bind(this);
     this.loadCategoryList = this.loadCategoryList.bind(this);
     this.swipeDigest = this.swipeDigest.bind(this);
+    this.loadHotNews = this.loadHotNews.bind(this);
     this.state = {currentDigest: 0}
   }
 
@@ -26,7 +27,7 @@ export default class Headline extends React.Component{
 
 
   loadCategoryList(category){
-    var categoryList = [];
+    var newsList = [];
 
     for (var i = 1 ; i < category.templates.length ; i++){
       var subCategoryList = [];
@@ -56,9 +57,9 @@ export default class Headline extends React.Component{
           );
         }
       }
-      categoryList.push({title: category.templates[i].title, subCategory: subCategoryList});
+      newsList.push({title: category.templates[i].title, subCategory: subCategoryList});
     }
-    return categoryList;
+    return newsList;
   }
 
   swipeDigest(offset, digestLength){
@@ -72,14 +73,47 @@ export default class Headline extends React.Component{
     });
   }
 
+  loadHotNews(category){
+    var newsList = [];
+
+    for (var i = 1 ; i < category.templates.length ; i++){
+      var subCategoryList = [];
+      if (category.templates[i].type != 6){
+        continue;
+      }
+      var sections = category.templates[i].sections;
+      for (var j = 0 ; j < sections.length ; j++){
+        var articles = category.templates[i].sections[j].articles;
+        for (var z = 0 ; z < articles.length ; z++){
+          var article = articles[z];
+          console.log(article.categoryName)
+          if (typeof article.title == "undefined"){
+            continue;
+          }
+          subCategoryList.push(
+            <li>
+              <a href={article.url.url}>
+                <div>{article.title}</div>
+              </a>
+            </li>
+          );
+        }
+      }
+      newsList.push(subCategoryList);
+    }
+    return newsList;
+
+
+  }
+
   render(){
-    const {category, windowWidth} = this.props;
+    const {category, windowWidth, categoryList} = this.props;
     if (typeof category == "undefined"){
       return null;
     }
     var digestList = this.loadDigest(category);
-    var categoryList = this.loadCategoryList(category);
-
+    var newsList = this.loadCategoryList(category);
+    var hotNewsList = this.loadHotNews(category);
     var currentDigest = digestList[this.state.currentDigest];
     var digestTransform = { 
         transform: `translateX(-${windowWidth * 0.55*this.state.currentDigest}px)` 
@@ -108,15 +142,34 @@ export default class Headline extends React.Component{
             <div><span>{currentDigest.categoryName}</span> | <span>{currentDigest.publisher}</span></div>
           </div>
         </div>
-        <div className="headline__otherCategories">
-          
-            {
-              categoryList.map(category=>{
-                return <div className="headline__sub-category"><h3 className="title">{category.title}</h3><ul>{category.subCategory}</ul></div>;
-              })
-            }
-          
-          <div></div>
+        <div className="headline__minorContent"> 
+          <div className="headline__otherCategories">
+              {
+                newsList.map(category=>{
+                  return <div className="headline__sub-category"><h3 className="title">{category.title}</h3><ul>{category.subCategory}</ul></div>;
+                })
+              }
+          </div>
+          <div className="headline__hotNews">
+            <h3>熱門</h3>
+            <div className="category_slider">
+              <ul>
+                {
+                  categoryList.map(category=>{
+                    return <li>{category.name}</li>;
+                  })
+
+                }
+              </ul>
+            </div>
+            <div className="category_rank">
+              {
+                hotNewsList.map(hotnews=>{
+                  return <div><ul>{hotnews}</ul></div>
+                })
+              }
+            </div>
+          </div>
         </div>
       </div>
 

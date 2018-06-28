@@ -7,6 +7,7 @@
     border: 1px solid black;
     overflow: hidden;
     display: flex;
+    margin-bottom: 10px;
 
   }
 
@@ -75,12 +76,11 @@
   }
 
   &__otherCategories{
-    width: 75%;
-    margin-top: 10px;
+    width: 70%;
     li{
       display: inline-block;
-      margin-right: 30px;
-      width: 344px;
+      width: 320px;
+      padding: 10px 20px 0 0;
       a{
         display: flex;
         width:100%;
@@ -124,4 +124,19 @@
   &__sub-category{
     float: left;
   }
+
+  &__minorContent{
+    width:100%;
+    display: flex;
+
+  }
+
+  &__hotNews{
+    margin-top: 68px;
+    width: 30%;
+    padding: 94px 0 84px;
+    border: 1px solid black;
+  }
+
+
 }

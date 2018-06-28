@@ -44,7 +44,7 @@ export default class Main extends React.Component{
     return(
       <div>
         <Header categoryList = {this.categoryList} windowWidth = {this.state.windowWidth}/>
-        <Route exact path="/" render={props=><Headline {...props} category={this.categories[0]} windowWidth = {this.state.windowWidth} />} />
+        <Route exact path="/" render={props=><Headline {...props} categoryList = {this.categoryList} category={this.categories[0]} windowWidth = {this.state.windowWidth} />} />
         <Route path="/category/:id" render={props=><Category {...props} />} />
       </div>
 
