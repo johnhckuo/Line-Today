@@ -1,26 +1,127 @@
 .headline {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding-left: 10%;
+  padding-right: 10%;
+  padding-top: 50px;
   &__digest {
+    position: relative;
     border: 1px solid black;
-    width: 80%;
+    overflow: hidden;
+    display: flex;
+
   }
 
   &__image-swiper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 70%;
     ul{
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background-color: #333333;
+      display: flex;
+      transition: all .5s;
     }
     li{
       float: left;
     }
     img{
+      width: 55vw;
+      height: 55vh;
+    }
+    button{
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      opacity: .5;
+      cursor: pointer;
+      transition: opacity .5s;
+      z-index:2;
+      &:hover{
+        opacity: .8;
+      }
+    }
+  }
 
+  &__swiper-previous{
+    left: 0px;
+    background: url(../../images/horizon_arrow.png);
+    transform: rotateY(180deg);
+  }
+
+  &__swiper-next{
+    right: 32px;
+    background: url(../../images/horizon_arrow.png);
+
+  }
+
+  &__digestContent{
+    z-index: 2;
+    position: absolute;
+    right: 0px;
+    width: 35%;
+    height: 100%;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding:50px 30px;
+    box-sizing: border-box;
+    h2{
+      font-size: 2.5rem;
+      line-height: 1.2em;
+      max-height: 3.6em;
+    }
+    span:nth-child(2){
+      color: grey;
+    }
+  }
+
+  &__otherCategories{
+    width: 75%;
+    margin-top: 10px;
+    li{
+      display: inline-block;
+      margin-right: 30px;
+      width: 344px;
+      a{
+        display: flex;
+        width:100%;
+        *{
+          margin-bottom: 10px;
+        }
+      }
+
+      div{
+        max-height: 4em;
+        overflow: hidden;
+      }
+      .publisher{
+        font-size: .5rem;
+        color: grey;
+      }
     }
 
+    .vertical_news{
+      a{
+        flex-direction: column;
+      }
+
+      img{
+        width: 100%;
+        height: 185px;
+      }
+    }
+
+    .horizon_news{
+      a{
+        align-items: center;
+      }
+      img{
+        margin-right: 10px;
+        width: 140px;
+        height: 96px;
+      }
+    }
+  }
+  &__sub-category{
+    float: left;
   }
 }

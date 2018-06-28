@@ -25,7 +25,6 @@
       text-align: center;
       padding-left:#{$header_item_width/2}px;
       padding-right:#{$header_item_width/2}px;
-      text-decoration: none;
       transition: all 0.5s;
       height: 100%;
       &:hover {
@@ -47,11 +46,12 @@
   	}
 
     &__icon-more{
-      background: url(../../images/arrow-down.png) no-repeat top left;
+      background: url(../../images/vertical_arrow.png) no-repeat top left;
       display: inline-block;
       height: 17px;
       width: 50px;
       margin-left: 5px;
+      transition: all .5s;
     }
 
     &__more{
@@ -61,7 +61,7 @@
       }
       &:hover .header__icon-more{
         display: inline-block;
-        background: url(../../images/arrow-up.png) no-repeat top left;
+        transform: rotateX(180deg);
       }
     }
 
@@ -74,7 +74,7 @@
       overflow-y: scroll;
       box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
       padding: 12px 16px;
-      z-index: 1;
+      z-index: 3;
       margin-top: -25px;
       background: #303030;
       color: grey;

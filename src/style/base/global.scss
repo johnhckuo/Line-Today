@@ -1,12 +1,39 @@
 
 body{
 	background-color: #fff;
-    font-size: 1.5rem;
-    line-height: 1.9rem;
-    font-weight: 400;
+    -moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased !important;
+	-moz-font-smoothing: antialiased !important;
+	text-rendering: optimizelegibility !important;
+	overflow-x: hidden;
+	font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
 }
 
 .hidden{
 	position: absolute;
     visibility: hidden;
+}
+
+.newsTitle{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+a{
+	text-decoration: none;
+	color: black;
+}
+
+h3{
+	font-size: 1.5rem;
+    line-height: 1.11;
+}
+
+.title{
+	margin-top: 16px;
+	margin-bottom: 16px;
+    font-weight: 700;
+    color: #202020;
+    text-transform: uppercase;
 }
