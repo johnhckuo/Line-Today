@@ -23,7 +23,6 @@ export default class Main extends React.Component{
     this.raw = data;
     this.categoryList = this.raw.result.categoryList;
     this.categories = this.raw.result.categories;
-
     this.setState({currentCategory: this.categoryList[0].id});
     window.addEventListener('resize', this.updateWindowDimensions);
     this.updateWindowDimensions();
@@ -42,11 +41,11 @@ export default class Main extends React.Component{
 
   render(){
     return(
-      <div>
+      <React.Fragment>
         <Header categoryList = {this.categoryList} windowWidth = {this.state.windowWidth}/>
-        <Route exact path="/" render={props=><Headline {...props} categoryList = {this.categoryList} category={this.categories[0]} windowWidth = {this.state.windowWidth} />} />
+        <Route exact path="/" render={props=><Headline {...props} categoryList = {this.categoryList} categories={this.categories} windowWidth = {this.state.windowWidth} />} />
         <Route path="/category/:id" render={props=><Category {...props} />} />
-      </div>
+      </React.Fragment>
 
     );
   }

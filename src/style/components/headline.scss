@@ -76,10 +76,10 @@
   }
 
   &__otherCategories{
-    width: 70%;
+    width: 55vw;
     li{
       display: inline-block;
-      width: 320px;
+      width: 46%;
       padding: 10px 20px 0 0;
       a{
         display: flex;
@@ -92,10 +92,6 @@
       div{
         max-height: 4em;
         overflow: hidden;
-      }
-      .publisher{
-        font-size: .5rem;
-        color: grey;
       }
     }
 
@@ -134,8 +130,6 @@
   &__hotNews{
     margin-top: 68px;
     width: 30%;
-    padding: 94px 0 84px;
-    border: 1px solid black;
   }
 
 
