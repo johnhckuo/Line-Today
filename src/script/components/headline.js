@@ -1,5 +1,5 @@
 import React from "react"
-import Hotnews from "../hotnews/main"
+import Hotnews from "./hotnews"
 
 export default class Headline extends React.Component{
 

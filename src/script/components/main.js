@@ -1,8 +1,8 @@
 import React from "react"
 import { Route, Switch, Redirect } from 'react-router-dom'
-import Header from "./header/main"
-import Headline from "./headline/main"
-import Category from "./category/main"
+import Header from "./header"
+import Headline from "./headline"
+import Category from "./category"
 
 import data from "../data"
 

@@ -1,6 +1,6 @@
 import React from "react"
 import { Link } from 'react-router-dom'
-import styleVar from '../../../style/utilities/variables.scss'
+import styleVar from '../../style/utilities/variables.scss'
 
 
 export default class Header extends React.Component{
