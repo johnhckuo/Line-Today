@@ -10,7 +10,17 @@ export default class Hotnews extends React.Component{
     this.updateTab = this.updateTab.bind(this);
     this.loadMostViewNews = this.loadMostViewNews.bind(this);
     this.updateCurrentNews = this.updateCurrentNews.bind(this);
-    this.state = {currentTab: 0, currentNews: 0}
+    this.mostViewListLength = 0;
+    this.state = {currentTab: 0, currentNews: 0, intervalId: null}
+  }
+
+  componentDidMount(){
+    var intervalId = setInterval(()=>{this.updateCurrentNews(1)}, 3000);
+    this.setState({intervalId: intervalId});
+  }
+
+  componentWillUnmount() {
+     clearInterval(this.state.intervalId);
   }
 
   updateTab(type, id, categoryLength){
@@ -75,14 +85,23 @@ export default class Hotnews extends React.Component{
     return newsList;
   }
 
-  updateCurrentNews(increment, categoryLength){
+  updateCurrentNews(increment){
+
+    if (this.state.intervalId != null){
+      clearInterval(this.state.intervalId);
+    }
+    var intervalId = setInterval(()=>{this.updateCurrentNews(1)}, 3000);
+
     this.setState(prevState=>{
       var currentNews = prevState.currentNews;
       currentNews += increment;
       if (currentNews < 0){
-        currentNews = categoryLength - 1;
+        currentNews = this.mostViewListLength - 1;
       }
-      return {currentNews : currentNews % categoryLength};
+      return {
+        currentNews : currentNews % this.mostViewListLength,
+        intervalId : intervalId
+      };
     });
   }
 
@@ -91,6 +110,7 @@ export default class Hotnews extends React.Component{
     var hotNewsList = this.loadHotNews(categories);
     var categoryLength = categoryList.length;
     var mostViewList = this.loadMostViewNews(categories);
+    this.mostViewListLength = mostViewList.length;
     var rankingHeaderTransform = this.state.currentTab == 0 ? null : { transform: `translateX(-${72 + 49*(this.state.currentTab-1)}px)`};
 
     var mostViewedTransform = { transform: `translateX(-${284*this.state.currentNews}px)`};
@@ -122,8 +142,8 @@ export default class Hotnews extends React.Component{
           <div className="mostViewCategory__header">
             <h3 className="title">熱門消息</h3>
             <div>
-              <button onClick={()=>{this.updateCurrentNews(-1, mostViewList.length)}} className="previousNews"></button>
-              <button onClick={()=>{this.updateCurrentNews(1, mostViewList.length)}} className="nextNews"></button>
+              <button onClick={()=>{this.updateCurrentNews(-1)}} className="previousNews"></button>
+              <button onClick={()=>{this.updateCurrentNews(1)}} className="nextNews"></button>
             </div>
           </div>
           <div className="mostViewCategory__slider">

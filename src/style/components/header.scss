@@ -1,12 +1,13 @@
+$header_height: 90px;
 .header{
 
     position: relative;
   	width: 100%;
   	top: 0;
   	left: 0;
-  	height: 100px;
-  	padding-left: 50px;
-  	padding-right: 50px;
+  	height: $header_height;
+    padding-left: $horizon_padding;
+    padding-right: $horizon_padding;
   	box-sizing: border-box;
   	background-color: #202020;
 
@@ -21,15 +22,11 @@
 
     a {
       display: block;
-      color: grey;
       text-align: center;
       padding-left:#{$header_item_width/2}px;
       padding-right:#{$header_item_width/2}px;
       transition: all 0.5s;
       height: 100%;
-      &:hover {
-        color: white;
-      }
     }
 
   	&__visible-list {
@@ -42,7 +39,14 @@
   	&__visible-link{
   		display: inline-block;
       height: 100%;
-      line-height: 100px;
+      line-height: $header_height;
+      color: grey;
+      &:hover {
+        color: white;
+      }
+      &:nth-child(1){
+        color: white;
+      }
   	}
 
     &__icon-more{
@@ -91,7 +95,7 @@
     &__login-button{
       position: absolute;
       top: 0;
-      right: 50px;
+      right: $horizon_padding;
       min-width: 110px;
       height: 100%;
       border: 1px solid #333;
@@ -103,7 +107,7 @@
         box-sizing: border-box;
         width: 100%;
         height: 100%;
-        line-height: 100px;
+        line-height: $header_height;
         font-size: 16px;
         color: grey;
         background-color: #202020;

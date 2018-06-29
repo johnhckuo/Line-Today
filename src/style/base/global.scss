@@ -22,7 +22,7 @@ body{
 
 a{
 	text-decoration: none;
-	color: black;
+	color: inherit;
 }
 
 h3{
@@ -41,4 +41,11 @@ h3{
 .publisher{
 	font-size: .5rem;
 	color: grey;
+}
+
+button{
+	display: inline-block;
+    border: 1px solid #e8e8e8;
+    vertical-align: top;
+    outline:none;
 }

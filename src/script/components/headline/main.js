@@ -10,7 +10,18 @@ export default class Headline extends React.Component{
     this.loadDigest = this.loadDigest.bind(this);
     this.loadCategoryList = this.loadCategoryList.bind(this);
     this.swipeDigest = this.swipeDigest.bind(this);
-    this.state = {currentDigest: 0}
+    this.createBulletControllers = this.createBulletControllers.bind(this);
+    this.digestListLength = 0;
+    this.state = {currentDigest: 0, intervalId: null}
+  }
+
+  componentDidMount(){
+    var intervalId = setInterval(()=>{this.swipeDigest(1)}, 3000);
+    this.setState({intervalId: intervalId});
+  }
+
+  componentWillUnmount() {
+     clearInterval(this.state.intervalId);
   }
 
   loadDigest(category){
@@ -62,18 +73,36 @@ export default class Headline extends React.Component{
     return newsList;
   }
 
-  swipeDigest(offset, digestLength){
-    var {currentDigest} = this.state;
-    currentDigest += offset;
-    if (currentDigest < 0){
-      currentDigest = digestLength - 1;
+  swipeDigest(offset, jumpto){
+
+    if (this.state.intervalId != null){
+      clearInterval(this.state.intervalId);
     }
+    var intervalId = setInterval(()=>{this.swipeDigest(1)}, 3000);
+
+    var {currentDigest} = this.state;
+    if (offset == 0 && jumpto != "undefined"){
+      currentDigest = jumpto;
+    }else{
+      currentDigest += offset;
+      if (currentDigest < 0){
+        currentDigest = this.digestListLength - 1;
+      }
+    }
+
     this.setState({
-      currentDigest : currentDigest % digestLength
+      intervalId: intervalId,
+      currentDigest : currentDigest % this.digestListLength
     });
   }
 
-
+  createBulletControllers(){
+    var bulletControllers = [];
+    for (var i = 0 ; i < this.digestListLength ; i++){
+      bulletControllers.push(<span key={i} data-index={i} className={this.state.currentDigest == i ? "activeBullet" : "inactiveBullet"}></span>)
+    }
+    return bulletControllers;
+  }
 
   render(){
     const {categories, windowWidth, categoryList} = this.props;
@@ -82,32 +111,38 @@ export default class Headline extends React.Component{
     }
     var category = categories[0];
     var digestList = this.loadDigest(category);
+    this.digestListLength = digestList.length;
+    var bulletControllers = this.createBulletControllers();
+
     var newsList = this.loadCategoryList(category);
     var currentDigest = digestList[this.state.currentDigest];
     var digestTransform = {
-        transform: `translateX(-${windowWidth * 0.55*this.state.currentDigest}px)`
+        transform: `translateX(-${windowWidth * 0.565*this.state.currentDigest}px)`
     };
     return(
       <div className="headline">
         <div className="headline__digest">
           <div className="headline__image-swiper">
-            <button onClick={()=>{this.swipeDigest(-1, digestList.length)}} className="headline__swiper-previous" />
-            <button onClick={()=>{this.swipeDigest(1, digestList.length)}} className="headline__swiper-next" />
+            <button onClick={()=>{this.swipeDigest(-1)}} className="headline__swiper-previous" />
+            <button onClick={()=>{this.swipeDigest(1)}} className="headline__swiper-next" />
             <ul style={digestTransform} >
             {
               digestList.map((article, index)=>{
                 return (
-                      <li><a><img src={this.imagePrefix + article.thumbnail.hash + this.imagePostfix}/></a></li>
+                      <li><a href={article.url.url}><img src={this.imagePrefix + article.thumbnail.hash + this.imagePostfix}/></a></li>
                 );
               })
             }
             </ul>
+            <div className="headline__bulletControllers" onClick={(e)=>{this.swipeDigest(0, e.target.dataset.index)}}>
+            {bulletControllers}
+            </div>
           </div>
 
-          <div className="headline__digestContent">
+          <a href={currentDigest.url.url} className="headline__digestContent">
             <h2>{currentDigest.title}</h2>
             <div><span>{currentDigest.categoryName}</span> | <span>{currentDigest.publisher}</span></div>
-          </div>
+          </a>
         </div>
         <div className="headline__minorContent">
           <div className="headline__otherCategories">
