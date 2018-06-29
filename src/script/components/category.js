@@ -25,7 +25,7 @@ export default class Category extends React.Component{
         var articles = category.templates[i].sections[j].articles;
         for (var z = 0 ; z < articles.length ; z++){
           var article = articles[z];
-          if (typeof article.title == "undefined"){
+          if (typeof article.title == "undefined" || typeof article.thumbnail == "undefined"){
             continue;
           }
           subCategoryList.push(

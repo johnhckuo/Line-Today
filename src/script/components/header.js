@@ -25,7 +25,7 @@ export default class Header extends React.Component{
       if (i == 0){
         id = "headline";
       }
-      navList.push(<li key={i} className="header__visible-link"><Link key={i} to={`/category/${id}`}>{category.name}</Link></li>);
+      navList.push(<li key={i} className="header__visible-link"><Link key={i} to={`/${id}`}>{category.name}</Link></li>);
     }
 
     return navList;
@@ -37,7 +37,7 @@ export default class Header extends React.Component{
     for (var j = startIndex ; j < categoryList.length ; j++){
       var category = categoryList[j]
       var id = category.id;
-      moreList.push(<li key={j}><Link key={j} to={`/category/${id}`}>{category.name}</Link></li>);
+      moreList.push(<li key={j}><Link key={j} to={`/${id}`}>{category.name}</Link></li>);
     }
     return moreList;
   }

@@ -1,5 +1,5 @@
 import React from "react"
-import { Route, Redirect } from 'react-router-dom'
+import { Route, Redirect, Switch } from 'react-router-dom'
 import Header from "./header"
 import Headline from "./headline"
 import Category from "./category"
@@ -44,23 +44,25 @@ export default class Main extends React.Component{
     return(
       <React.Fragment>
         <Header categoryList = {this.categoryList} windowWidth = {this.state.windowWidth}/>
-        <Route exact path="(/category/headline|/)" render={props=>
-          <Headline 
-            {...props} 
-            categoryList = {this.categoryList} 
-            categories={this.categories} 
-            windowWidth = {this.state.windowWidth}
-            imageURL={this.imageURL}
-          />
-        } />
-        <Route exact path="/category/:id" render={props=>
-          <Category 
-            {...props} 
-            categoryList = {this.categoryList} 
-            categories={this.categories} 
-            imageURL={this.imageURL}
-          />
-        }/>
+        <Switch>
+          <Route exact path="/(|headline)/" render={props=>
+            <Headline 
+              {...props} 
+              categoryList = {this.categoryList} 
+              categories={this.categories} 
+              windowWidth = {this.state.windowWidth}
+              imageURL={this.imageURL}
+            />
+          } />
+          <Route exact path="/:id" render={props=>
+            <Category 
+              {...props} 
+              categoryList = {this.categoryList} 
+              categories={this.categories} 
+              imageURL={this.imageURL}
+            />
+          }/>
+        </Switch>
       </React.Fragment>
 
     );
