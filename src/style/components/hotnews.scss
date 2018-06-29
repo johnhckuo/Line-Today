@@ -29,30 +29,15 @@
     align-items: center;
     justify-content: space-between;
   }
-
-  button{
-    background: white url(../../images/small_arrow.png);
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-  }
-
-  .nextNews{
-    right: -40px;
-  }
-
-  .previousNews{
-    right: -20px;
-    transform: rotateY(180deg);
+  div:nth-child(2){
+    position: relative;
   }
 
 }
 .categoryRanking{
   position: relative;
   ul{
-    display: flex;
-    white-space: nowrap;
-    transition: all .5s;
+    @include horizontal_list;
   }
 
   li{
@@ -87,29 +72,4 @@
     border-bottom: 2px solid black;
   }
 
-  button{
-    position: absolute;
-    top: 0px;
-    background: white url(../../images/small_arrow.png);
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-  }
-  &__slideController{
-    position: absolute;
-    top: 0px;
-    right: 40px;
-    width: 30px;
-    height: 20px;
-    background: linear-gradient(90deg,hsla(0,0%,100%,0) 0,#fff 70%);
-  }
-
-  .nextCategory{
-    right: -40px;
-  }
-
-  .previousCategory{
-    right: -20px;
-    transform: rotateY(180deg);
-  }
 }

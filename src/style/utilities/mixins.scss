@@ -1,0 +1,5 @@
+@mixin horizontal_list {
+	display: flex;
+    white-space: nowrap;
+    transition: all .5s;
+}

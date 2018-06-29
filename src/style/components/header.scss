@@ -30,10 +30,8 @@ $header_height: 90px;
     }
 
   	&__visible-list {
-  		display: flex;
   		align-items: center;
-  		overflow: hidden;
-  		white-space: nowrap;
+      @include horizontal_list;
   	}
 
   	&__visible-link{
@@ -114,5 +112,8 @@ $header_height: 90px;
         background-color: #202020;
       }
     }
-
+    .currentCategory{
+      color: white;
+      font-weight: bold;
+    }
 }

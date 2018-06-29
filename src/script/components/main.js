@@ -17,14 +17,15 @@ export default class Main extends React.Component{
       imagePrefix: "https://obs.line-scdn.net/",
       imagePostfix: "/w1200"
     }
-    this.state = {currentCategory: -1, windowWidth: 0};
+    this.state = {currentCategory: -1, windowWidth: 0, currentCategory: 0};
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    this.updateCurrentCategory = this.updateCurrentCategory.bind(this);
   }
 
   componentDidMount(){
     this.categoryList = data.result.categoryList;
     this.categories = data.result.categories;
-    this.setState({currentCategory: this.categoryList[0].id});
+    this.setState({currentCategory: 0});
     window.addEventListener('resize', this.updateWindowDimensions);
     this.updateWindowDimensions();
   }
@@ -40,10 +41,18 @@ export default class Main extends React.Component{
     this.setState({ windowWidth: window.innerWidth })
   }
 
+  updateCurrentCategory(newCategory){
+    this.setState({currentCategory: newCategory})
+  }
+
   render(){
     return(
       <React.Fragment>
-        <Header categoryList = {this.categoryList} windowWidth = {this.state.windowWidth}/>
+        <Header categoryList = {this.categoryList} 
+          windowWidth = {this.state.windowWidth}
+          currentCategory = {this.state.currentCategory}
+          updateCurrentCategory = {this.updateCurrentCategory}
+        />
         <Switch>
           <Route exact path="/(|headline)/" render={props=>
             <Headline 
@@ -52,6 +61,8 @@ export default class Main extends React.Component{
               categories={this.categories} 
               windowWidth = {this.state.windowWidth}
               imageURL={this.imageURL}
+              currentCategory = {this.state.currentCategory}
+              updateCurrentCategory = {this.updateCurrentCategory}
             />
           } />
           <Route exact path="/:id" render={props=>
@@ -60,6 +71,7 @@ export default class Main extends React.Component{
               categoryList = {this.categoryList} 
               categories={this.categories} 
               imageURL={this.imageURL}
+              currentCategory = {this.state.currentCategory}
             />
           }/>
         </Switch>

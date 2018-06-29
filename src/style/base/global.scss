@@ -30,18 +30,7 @@ h3{
     line-height: 1.11;
 }
 
-.title{
-	margin-top: 16px;
-	margin-bottom: 16px;
-    font-weight: 700;
-    color: #202020;
-    text-transform: uppercase;
-}
 
-.publisher{
-	font-size: .5rem;
-	color: grey;
-}
 
 button{
 	display: inline-block;
@@ -50,6 +39,52 @@ button{
     outline:none;
 }
 
-.disable_links{
-	pointer-events: none;
+.global{
+	
+	&__disable_links{
+		pointer-events: none;
+	}
+
+	&__sliderController{
+	    position: absolute;
+	    top: 0px;
+	    right: 40px;
+	    width: 30px;
+	    height: 20px;
+	    background: linear-gradient(90deg,hsla(0,0%,100%,0) 0,#fff 70%);
+
+		button{
+			position: absolute;
+		    top: 0px;
+		    background: white url(../../images/small_arrow.png);
+		    width: 20px;
+		    height: 20px;
+		    cursor: pointer;
+		}
+	}
+
+	&__nextCategory{
+		right: -40px;
+	}
+
+	&__previousCategory{
+		right: -20px;
+		transform: rotateY(180deg);
+	}
+
+
+	&__title{
+		margin-top: 16px;
+		margin-bottom: 16px;
+	    font-weight: 700;
+	    color: #202020;
+	    text-transform: uppercase;
+	}
+
+	&__publisher{
+		font-size: .5rem;
+		color: grey;
+	}
+
 }
+

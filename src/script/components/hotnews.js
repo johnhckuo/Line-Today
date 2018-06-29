@@ -11,7 +11,7 @@ export default class Hotnews extends React.Component{
     this.loadMostViewNews = this.loadMostViewNews.bind(this);
     this.updateCurrentNews = this.updateCurrentNews.bind(this);
     this.mostViewListLength = 0;
-    this.state = {currentTab: 0, currentNews: 0, intervalId: null}
+    this.state = {currentTab: this.props.currentCategory, currentNews: 0, intervalId: null, prviousCategory: this.props.currentCategory}
   }
 
   componentDidMount(){
@@ -49,7 +49,7 @@ export default class Hotnews extends React.Component{
       newsList.push(<li key={i}>
                       <a href={articles[i].url.url}>
                         <div>{`${i+1} ${articles[i].title}`}</div>
-                        <div className="publisher">{articles[i].publisher}</div>
+                        <div className="global__publisher">{articles[i].publisher}</div>
                       </a>
                     </li>);
     }
@@ -108,7 +108,10 @@ export default class Hotnews extends React.Component{
   }
 
   render(){
-    const {categories, categoryList} = this.props;
+    const {categories, categoryList, currentCategory} = this.props;
+    if (currentCategory != this.state.previousCategory){
+      this.setState({currentTab: currentCategory, previousCategory: currentCategory})
+    }
     if (categories.length == 0){
       return null;
     }
@@ -121,7 +124,7 @@ export default class Hotnews extends React.Component{
     var mostViewedTransform = { transform: `translateX(-${284*this.state.currentNews}px)`};
     return(
       <div className="hotnews">
-        <h3 className="title">熱門</h3>
+        <h3 className="global__title">熱門</h3>
         <div className="categoryRanking">
           <div className="categoryRanking__header">
             <ul style={rankingHeaderTransform}>
@@ -133,9 +136,9 @@ export default class Hotnews extends React.Component{
               }
             </ul>
           </div>
-          <div className="categoryRanking__slideController">
-            <button onClick={()=>{this.updateTab('increment', -1, categoryLength)}} className="previousCategory"></button>
-            <button onClick={()=>{this.updateTab('increment', 1, categoryLength)}} className="nextCategory"></button>
+          <div className="global__sliderController">
+            <button onClick={()=>{this.updateTab('increment', -1, categoryLength)}} className="global__previousCategory"></button>
+            <button onClick={()=>{this.updateTab('increment', 1, categoryLength)}} className="global__nextCategory"></button>
           </div>
         </div>
         <div className="categoryRanking__content">
@@ -145,17 +148,17 @@ export default class Hotnews extends React.Component{
         </div>
         <div className="mostViewCategory">
           <div className="mostViewCategory__header">
-            <h3 className="title">熱門消息</h3>
-            <div>
-              <button onClick={()=>{this.updateCurrentNews(-1)}} className="previousNews"></button>
-              <button onClick={()=>{this.updateCurrentNews(1)}} className="nextNews"></button>
+            <h3 className="global__title">熱門消息</h3>
+            <div className="global__sliderController">
+              <button onClick={()=>{this.updateCurrentNews(-1)}} className="global__previousCategory"></button>
+              <button onClick={()=>{this.updateCurrentNews(1)}} className="global__nextCategory"></button>
             </div>
           </div>
           <div className="mostViewCategory__slider">
             <ul style={mostViewedTransform}>
               {
                 mostViewList.map((mostViewed, index)=>{
-                  return <li key={index}><img src={this.imagePrefix + mostViewed.thumbnail.hash + this.imagePostfix}/><div>{mostViewed.title}</div><div className="publisher">{mostViewed.publisher}</div></li>
+                  return <li key={index}><img src={this.imagePrefix + mostViewed.thumbnail.hash + this.imagePostfix}/><div>{mostViewed.title}</div><div className="global__publisher">{mostViewed.publisher}</div></li>
                 })
               }
             </ul>

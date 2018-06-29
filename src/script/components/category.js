@@ -34,7 +34,7 @@ export default class Category extends React.Component{
                 <img src={imageURL.imagePrefix + article.thumbnail.hash + imageURL.imagePostfix}/>
                 <div className="category__newsTitle">
                   <p>{article.title}</p>
-                  <div className="publisher">{article.publisher}</div>
+                  <div className="global__publisher">{article.publisher}</div>
                 </div>
               </a>
             </li>
@@ -47,7 +47,7 @@ export default class Category extends React.Component{
   }
 
   render(){
-    const {categories, categoryList, imageURL} = this.props;
+    const {categories, categoryList, imageURL, currentCategory} = this.props;
     this.categoryId = this.props.location.pathname.split("/").pop();
     if (categories.length > 0){
       var category = this.loadCategory(categories, imageURL);
@@ -61,13 +61,17 @@ export default class Category extends React.Component{
             <ul>
               {
                 category.newsList.map((category, index)=>{
-                  return <div key={index} className="category__sub-category"><h3 className="title">{category.title}</h3><ul>{category.subCategory}</ul></div>;
+                  return <div key={index} className="category__sub-category"><h3 className="global__title">{category.title}</h3><ul>{category.subCategory}</ul></div>;
                 })
               }
             </ul>
           </div>
           <div className="category__hotnews">
-            <Hotnews categories={categories} categoryList={categoryList}/>
+            <Hotnews 
+              categories={categories} 
+              categoryList={categoryList}
+              currentCategory = {currentCategory}
+            />
           </div>
         </div>
     );

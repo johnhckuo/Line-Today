@@ -6,11 +6,20 @@ export default class Headline extends React.Component{
   constructor(props){
     super(props);
     this.loadDigest = this.loadDigest.bind(this);
-    this.loadCategoryList = this.loadCategoryList.bind(this);
     this.swipeDigest = this.swipeDigest.bind(this);
     this.createBulletControllers = this.createBulletControllers.bind(this);
+    this.loadSubCategoriesContent = this.loadSubCategoriesContent.bind(this);
+    this.loadSubCategoriesTitle = this.loadSubCategoriesTitle.bind(this);
+    this.updateCurrentSubCategory = this.updateCurrentSubCategory.bind(this);
+    this.slider = this.slider.bind(this);
     this.digestListLength = 0;
-    this.state = {currentDigest: 0, intervalId: null}
+    this.subCategoryLength = 0;
+    this.state = {
+      currentDigest: 0, 
+      intervalId: null, 
+      currentSubCategory: 0, 
+      sliderProgress: 0
+    };
   }
 
   componentDidMount(){
@@ -34,41 +43,54 @@ export default class Headline extends React.Component{
     return digestList;
   }
 
-
-  loadCategoryList(category, imageURL){
+  loadSubCategoriesContent(index, category, imageURL){
     var newsList = [];
-
-    for (var i = 1 ; i < category.templates.length ; i++){
-      var subCategoryList = [];
-      var sections = category.templates[i].sections;
-      for (var j = 0 ; j < sections.length ; j++){
-        var articles = category.templates[i].sections[j].articles;
-        for (var z = 0 ; z < articles.length ; z++){
-          var article = articles[z];
-          if (typeof article.title == "undefined"){
-            continue;
-          }
-          var newsType = "horizon_news";
-          if (j == 0 && z < 4){
-            newsType = "vertical_news";
-          }
-
-          subCategoryList.push(
-            <li className={newsType} key={article.id}>
-              <a href={article.url.url}>
-                <img src={imageURL.imagePrefix + article.thumbnail.hash + imageURL.imagePostfix}/>
-                <div className="headline__newsTitle">
-                  <div>{article.title}</div>
-                  <div className="publisher">{article.publisher}</div>
-                </div>
-              </a>
-            </li>
-          );
+    var sections = category.templates[index].sections;
+    for (var j = 0 ; j < sections.length ; j++){
+      var articles = category.templates[index].sections[j].articles;
+      for (var z = 0 ; z < articles.length ; z++){
+        var article = articles[z];
+        if (typeof article.title == "undefined"){
+          continue;
         }
+        var newsType = "headline__horizonNews";
+        if (j == 0 && z < 4){
+          newsType = "headline__verticalNews";
+        }
+
+        newsList.push(
+          <li className={newsType} key={article.id}>
+            <a href={article.url.url}>
+              <img src={imageURL.imagePrefix + article.thumbnail.hash + imageURL.imagePostfix}/>
+              <div className="headline__newsTitle">
+                <div>{article.title}</div>
+                <div className="global__publisher">{article.publisher}</div>
+              </div>
+            </a>
+          </li>
+        );
       }
-      newsList.push({title: category.templates[i].title, subCategory: subCategoryList});
     }
     return newsList;
+  }
+
+  loadSubCategoriesTitle(category){
+    var subCategoryTitles = [];
+    for (var i = 0 ; i < this.subCategoryLength ; i++){
+      var subCategory = category.templates[i];
+      if (typeof subCategory.title != 'undefined'){
+        var chosenCategoryClass = "";
+        if (this.state.currentSubCategory == i){
+          chosenCategoryClass = "chosenSubCategory";
+        }
+        subCategoryTitles.push(<li className={chosenCategoryClass} key={i} onClick={this.updateCurrentSubCategory.bind(this, i)}>{subCategory.title}</li>)
+      }
+    }
+    return subCategoryTitles;
+  }
+
+  updateCurrentSubCategory(id){
+    this.setState({currentSubCategory: id})
   }
 
   swipeDigest(offset, jumpto){
@@ -102,8 +124,21 @@ export default class Headline extends React.Component{
     return bulletControllers;
   }
 
+  slider(increment){
+    this.setState(prevState=>{
+      var sliderProgress = prevState.sliderProgress;
+      sliderProgress += increment;
+      if (sliderProgress < 0){
+        sliderProgress = this.subCategoryLength - 1;
+      }
+      return {
+        sliderProgress : sliderProgress % this.subCategoryLength,
+      };
+    });
+  }
+
   render(){
-    const {categories, windowWidth, categoryList, imageURL} = this.props;
+    const {categories, windowWidth, categoryList, imageURL, currentCategory} = this.props;
     if (categories.length == 0){
       return null;
     }
@@ -111,12 +146,18 @@ export default class Headline extends React.Component{
     var digestList = this.loadDigest(category);
     this.digestListLength = digestList.length;
     var bulletControllers = this.createBulletControllers();
-
-    var newsList = this.loadCategoryList(category, imageURL);
     var currentDigest = digestList[this.state.currentDigest];
     var digestTransform = {
         transform: `translateX(-${windowWidth * 0.565*this.state.currentDigest}px)`
     };
+
+    this.subCategoryLength = category.templates.length;
+    var newsContent = this.loadSubCategoriesContent(this.state.currentSubCategory, category, imageURL);
+    var newsTitle = this.loadSubCategoriesTitle(category);
+    var subCategoryTransform = {
+        transform: `translateX(-${49*this.state.sliderProgress}px)`
+    };
+
     return(
       <div className="headline">
         <div className="headline__digest">
@@ -144,14 +185,29 @@ export default class Headline extends React.Component{
         </div>
         <div className="headline__minorContent">
           <div className="headline__otherCategories">
-              {
-                newsList.map((category,index)=>{
-                  return <div key={index} className="headline__sub-category"><h3 className="title">{category.title}</h3><ul>{category.subCategory}</ul></div>;
-                })
-              }
+            <div className="headline__subTitleContainer">
+              <div className="headline__subCategoryTitles">
+                <ul style={subCategoryTransform}>
+                  {newsTitle}
+                </ul>
+              </div>
+              <div className="global__sliderController">
+                <button onClick={()=>{this.slider(-1)}} className="global__previousCategory"></button>
+                <button onClick={()=>{this.slider(1)}} className="global__nextCategory"></button>
+              </div>
+            </div>
+            <div className="headline__subCategoryContents">
+              <ul>
+                {newsContent}
+              </ul>
+            </div>
           </div>
           <div className="headline__hotNews">
-            <Hotnews categories={categories} categoryList={categoryList} />
+            <Hotnews 
+              categories={categories} 
+              categoryList={categoryList} 
+              currentCategory = {currentCategory}
+            />
           </div>
         </div>
       </div>
