@@ -11,6 +11,12 @@
 
   }
 
+  &__newsTitle{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   &__image-swiper {
     position: relative;
     display: flex;

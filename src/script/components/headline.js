@@ -5,8 +5,6 @@ export default class Headline extends React.Component{
 
   constructor(props){
     super(props);
-    this.imagePrefix = "https://obs.line-scdn.net/";
-    this.imagePostfix = "/w1200";
     this.loadDigest = this.loadDigest.bind(this);
     this.loadCategoryList = this.loadCategoryList.bind(this);
     this.swipeDigest = this.swipeDigest.bind(this);
@@ -37,7 +35,7 @@ export default class Headline extends React.Component{
   }
 
 
-  loadCategoryList(category){
+  loadCategoryList(category, imageURL){
     var newsList = [];
 
     for (var i = 1 ; i < category.templates.length ; i++){
@@ -56,10 +54,10 @@ export default class Headline extends React.Component{
           }
 
           subCategoryList.push(
-            <li className={newsType}>
+            <li className={newsType} key={article.id}>
               <a href={article.url.url}>
-                <img src={this.imagePrefix + article.thumbnail.hash + this.imagePostfix}/>
-                <div className="newsTitle">
+                <img src={imageURL.imagePrefix + article.thumbnail.hash + imageURL.imagePostfix}/>
+                <div className="headline__newsTitle">
                   <div>{article.title}</div>
                   <div className="publisher">{article.publisher}</div>
                 </div>
@@ -105,7 +103,7 @@ export default class Headline extends React.Component{
   }
 
   render(){
-    const {categories, windowWidth, categoryList} = this.props;
+    const {categories, windowWidth, categoryList, imageURL} = this.props;
     if (categories.length == 0){
       return null;
     }
@@ -114,7 +112,7 @@ export default class Headline extends React.Component{
     this.digestListLength = digestList.length;
     var bulletControllers = this.createBulletControllers();
 
-    var newsList = this.loadCategoryList(category);
+    var newsList = this.loadCategoryList(category, imageURL);
     var currentDigest = digestList[this.state.currentDigest];
     var digestTransform = {
         transform: `translateX(-${windowWidth * 0.565*this.state.currentDigest}px)`
@@ -129,7 +127,7 @@ export default class Headline extends React.Component{
             {
               digestList.map((article, index)=>{
                 return (
-                      <li><a href={article.url.url}><img src={this.imagePrefix + article.thumbnail.hash + this.imagePostfix}/></a></li>
+                      <li key={index}><a href={article.url.url}><img src={imageURL.imagePrefix + article.thumbnail.hash + imageURL.imagePostfix}/></a></li>
                 );
               })
             }
@@ -147,8 +145,8 @@ export default class Headline extends React.Component{
         <div className="headline__minorContent">
           <div className="headline__otherCategories">
               {
-                newsList.map(category=>{
-                  return <div className="headline__sub-category"><h3 className="title">{category.title}</h3><ul>{category.subCategory}</ul></div>;
+                newsList.map((category,index)=>{
+                  return <div key={index} className="headline__sub-category"><h3 className="title">{category.title}</h3><ul>{category.subCategory}</ul></div>;
                 })
               }
           </div>

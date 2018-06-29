@@ -14,15 +14,15 @@ body{
     visibility: hidden;
 }
 
-.newsTitle{
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-}
-
 a{
 	text-decoration: none;
 	color: inherit;
+}
+
+h2{
+	font-size: 1.8rem;
+    line-height: 1.11;
+    font-weight: bold;
 }
 
 h3{
@@ -48,4 +48,8 @@ button{
     border: 1px solid #e8e8e8;
     vertical-align: top;
     outline:none;
+}
+
+.disable_links{
+	pointer-events: none;
 }

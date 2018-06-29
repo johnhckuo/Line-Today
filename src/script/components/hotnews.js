@@ -47,8 +47,10 @@ export default class Hotnews extends React.Component{
         break;
       }
       newsList.push(<li key={i}>
+                      <a href={articles[i].url.url}>
                         <div>{`${i+1} ${articles[i].title}`}</div>
                         <div className="publisher">{articles[i].publisher}</div>
+                      </a>
                     </li>);
     }
     return newsList;
@@ -107,6 +109,9 @@ export default class Hotnews extends React.Component{
 
   render(){
     const {categories, categoryList} = this.props;
+    if (categories.length == 0){
+      return null;
+    }
     var hotNewsList = this.loadHotNews(categories);
     var categoryLength = categoryList.length;
     var mostViewList = this.loadMostViewNews(categories);
