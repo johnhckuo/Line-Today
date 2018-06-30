@@ -8,9 +8,10 @@ Line Today with react.js
 npm install
 
 # build and run locally
-npm run start
+npm run dev
 ```
 
 ## Powered by
 - [Reactjs](https://reactjs.org/)
-- [Styled Component](https://www.styled-components.com/)
+- [SASS](https://sass-lang.com/)
+- [Babel](https://babeljs.io/)
