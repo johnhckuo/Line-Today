@@ -17,7 +17,7 @@ export default class Headline extends React.Component{
     this.state = {
       currentDigest: 0, 
       intervalId: null, 
-      currentSubCategory: 0, 
+      currentSubCategory: 1, 
       sliderProgress: 0
     };
   }
@@ -43,11 +43,11 @@ export default class Headline extends React.Component{
     return digestList;
   }
 
-  loadSubCategoriesContent(index, category, imageURL){
+  loadSubCategoriesContent(category, imageURL){
     var newsList = [];
-    var sections = category.templates[index].sections;
-    for (var j = 0 ; j < sections.length ; j++){
-      var articles = category.templates[index].sections[j].articles;
+    var template = category.templates[this.state.currentSubCategory];
+    for (var j = 0 ; j < template.sections.length ; j++){
+      var articles = template.sections[j].articles;
       for (var z = 0 ; z < articles.length ; z++){
         var article = articles[z];
         if (typeof article.title == "undefined"){
@@ -152,7 +152,7 @@ export default class Headline extends React.Component{
     };
 
     this.subCategoryLength = category.templates.length;
-    var newsContent = this.loadSubCategoriesContent(this.state.currentSubCategory, category, imageURL);
+    var newsContent = this.loadSubCategoriesContent(category, imageURL);
     var newsTitle = this.loadSubCategoriesTitle(category);
     var subCategoryTransform = {
         transform: `translateX(-${49*this.state.sliderProgress}px)`
@@ -185,8 +185,8 @@ export default class Headline extends React.Component{
         </div>
         <div className="headline__minorContent">
           <div className="headline__otherCategories">
-            <div className="headline__subTitleContainer">
-              <div className="headline__subCategoryTitles">
+            <div className="global__subTitleContainer">
+              <div className="global__subCategoryTitles">
                 <ul style={subCategoryTransform}>
                   {newsTitle}
                 </ul>

@@ -31,9 +31,6 @@ export default class Main extends React.Component{
   }
 
   componentWillUnmount(){
-    this.setState({
-      init:false
-    })
     window.removeEventListener('resize', this.updateWindowDimensions);
   }
 

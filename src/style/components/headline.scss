@@ -75,6 +75,7 @@
       font-size: 2.5rem;
       line-height: 1.2em;
       max-height: 3.6em;
+      overflow: hidden;
     }
     span:nth-child(2){
       color: grey;
@@ -82,7 +83,7 @@
   }
 
   &__otherCategories{
-    width: 60vw;
+    width: 69%;
   }
 
   &__sub-category{
@@ -96,7 +97,7 @@
   }
 
   &__hotNews{
-    width: 27vw;
+    width: 31%;
   }
 
   &__bulletControllers{
@@ -118,40 +119,6 @@
     }
     .activeBullet{
       background: white;
-    }
-  }
-
-  &__subTitleContainer{
-    position: relative;
-    div:nth-child(2){
-      right: 10%;
-      top: 25%;
-    }
-  }
-
-  &__subCategoryTitles{
-    width: 90%;
-    overflow: hidden;
-    position: relative;
-    margin-bottom: 10px;
-
-    ul{
-      @include horizontal_list;
-    }
-
-    li{
-      border-bottom: 1px solid #bbbbbb;
-      font-size: 1.1rem;
-      font-weight: bold;
-      padding: 10px;
-      cursor: pointer;
-      &:hover{
-        color: grey;
-      }
-    }
-    .chosenSubCategory{
-      color: #bbbbbb;
-      border-bottom: 2px solid black;
     }
   }
 

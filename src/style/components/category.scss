@@ -3,12 +3,17 @@
 	padding-left: $horizon_padding;
 	padding-right: $horizon_padding;
 	padding-top: 50px;
+	&__container{
+		display: flex;
+		flex-direction: column;
+		width: 70%;
+	}
 	&__hotnews{
 		width: 30%;
 		margin-left: 50px;
 	}
 	&__news{
-		width: 65%;
+		width: 100%;
 		
 		li{
 			display: inline-block;
@@ -26,6 +31,8 @@
 					position: absolute;
 					bottom: 15px;
 					font-weight: bold;
+					border-radius: 5px;
+	    			background: rgba(0, 0, 0, 0.6);
 				}
 
 			}
@@ -52,4 +59,5 @@
 	    	margin-bottom:10px;
 	    }
 	}
+
 }
