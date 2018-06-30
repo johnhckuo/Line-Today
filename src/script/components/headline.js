@@ -1,10 +1,12 @@
 import React from "react"
 import Hotnews from "./hotnews"
+import styleVar from '../../style/utilities/variables.scss'
 
 export default class Headline extends React.Component{
 
   constructor(props){
     super(props);
+
     this.loadDigest = this.loadDigest.bind(this);
     this.swipeDigest = this.swipeDigest.bind(this);
     this.createBulletControllers = this.createBulletControllers.bind(this);
@@ -12,8 +14,10 @@ export default class Headline extends React.Component{
     this.loadSubCategoriesTitle = this.loadSubCategoriesTitle.bind(this);
     this.updateCurrentSubCategory = this.updateCurrentSubCategory.bind(this);
     this.slider = this.slider.bind(this);
+
     this.digestListLength = 0;
     this.subCategoryLength = 0;
+    
     this.state = {
       currentDigest: 0, 
       intervalId: null, 
@@ -129,11 +133,11 @@ export default class Headline extends React.Component{
       var sliderProgress = prevState.sliderProgress;
       sliderProgress += increment;
       if (sliderProgress < 0){
-        sliderProgress = this.subCategoryLength - 1;
+        sliderProgress = 3;
+      }else if (sliderProgress >= 3){
+        sliderProgress = 0;
       }
-      return {
-        sliderProgress : sliderProgress % this.subCategoryLength,
-      };
+      return {sliderProgress};
     });
   }
 
@@ -147,17 +151,27 @@ export default class Headline extends React.Component{
     this.digestListLength = digestList.length;
     var bulletControllers = this.createBulletControllers();
     var currentDigest = digestList[this.state.currentDigest];
+
+    var offset = 0;
+    if (windowWidth <= styleVar.phone_width.split("px")[0]){
+      offset = styleVar.phone_image_width;
+    }else{
+      offset = styleVar.pc_image_width;
+    }
+    offset = offset.split("vw")[0] / 100;
+
     var digestTransform = {
-        transform: `translateX(-${windowWidth * 0.45*this.state.currentDigest}px)`
+        transform: `translateX(-${windowWidth * offset *this.state.currentDigest}px)`
     };
 
     this.subCategoryLength = category.templates.length;
     var newsContent = this.loadSubCategoriesContent(category, imageURL);
     var newsTitle = this.loadSubCategoriesTitle(category);
-    var subCategoryTransform = {
-        transform: `translateX(-${49*this.state.sliderProgress}px)`
-    };
 
+    var subCategoryTransform = {
+      transform: `translateX(-${windowWidth/3*this.state.sliderProgress}px)`
+    }; 
+    
     return(
       <div className="headline">
         <div className="headline__digest">
@@ -180,7 +194,7 @@ export default class Headline extends React.Component{
 
           <a href={currentDigest.url.url} className="headline__digestContent">
             <h2>{currentDigest.title}</h2>
-            <div><span>{currentDigest.categoryName}</span> | <span>{currentDigest.publisher}</span></div>
+            <div><span>{currentDigest.categoryName} | </span><span>{currentDigest.publisher}</span></div>
           </a>
         </div>
         <div className="headline__minorContent">

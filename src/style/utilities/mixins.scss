@@ -4,19 +4,39 @@
     transition: all .5s;
 }
 
+@mixin container_initial_settings{
+	padding-left: $horizon_padding;
+	padding-right: $horizon_padding;
+	@include phone{
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+	padding-top: 30px;
+}
+
+@mixin flex_column{
+	display: flex;
+	flex-direction: column;
+}
+
+@mixin flex_row{
+	display: flex;
+	flex-direction: row;
+}
+
 @mixin tablet {
-    @media screen and (max-width: $padWidth) {
+    @media screen and (max-width: $pad_width) {
         @content;
     }
 }
 @mixin phone {
-    @media screen and (max-width: $phoneWidth) {
+    @media screen and (max-width: $phone_width) {
         @content;
     }
 }
 
 @mixin pc {
-    @media screen and (max-width: $pcWidth) {
+    @media screen and (max-width: $pc_width) {
         @content;
     }
 }

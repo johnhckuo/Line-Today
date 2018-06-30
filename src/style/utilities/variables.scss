@@ -2,11 +2,19 @@ $header_item_width: 32;
 $mobile_width: 700;
 $horizon_padding: 15%;
 
-$padWidth: 1050px;
-$phoneWidth: 800px;
-$pcWidth: 1200px;
+$pad_width: 1050px;
+$phone_width: 950px;
+$pc_width: 1200px;
+
+$pc_image_width: 45vw;
+$phone_image_width: 100vw;
 
 :export {
   header_item_width: $header_item_width;
   mobile_width: $mobile_width;
+  phone_width: $phone_width;
+  pad_width: $pad_width;
+  pc_width: $pc_width;
+  pc_image_width: $pc_image_width;
+  phone_image_width: $phone_image_width;
 }

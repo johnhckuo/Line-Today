@@ -4,14 +4,23 @@ export default class Hotnews extends React.Component{
 
   constructor(props){
     super(props);
-    this.imagePrefix = "https://obs.line-scdn.net/";
-    this.imagePostfix = "/w1200";
+
     this.loadHotNews = this.loadHotNews.bind(this);
     this.updateTab = this.updateTab.bind(this);
     this.loadMostViewNews = this.loadMostViewNews.bind(this);
     this.updateCurrentNews = this.updateCurrentNews.bind(this);
+    this.initialize = this.initialize.bind(this);
+
     this.mostViewListLength = 0;
-    this.state = {currentTab: this.props.currentCategory, currentNews: 0, intervalId: null, prviousCategory: this.props.currentCategory}
+    this.imagePrefix = "https://obs.line-scdn.net/";
+    this.imagePostfix = "/w1200";
+
+    this.state = {
+      currentTab: this.props.currentCategory, 
+      currentNews: 0, 
+      intervalId: null, 
+      prviousCategory: this.props.currentCategory
+    }
   }
 
   componentDidMount(){
@@ -87,6 +96,10 @@ export default class Hotnews extends React.Component{
     return newsList;
   }
 
+  initialize(currentCategory){
+    this.setState({currentTab: currentCategory, previousCategory: currentCategory})
+  }
+
   updateCurrentNews(increment){
 
     if (this.state.intervalId != null){
@@ -110,7 +123,7 @@ export default class Hotnews extends React.Component{
   render(){
     const {categories, categoryList, currentCategory, windowWidth} = this.props;
     if (currentCategory != this.state.previousCategory){
-      this.setState({currentTab: currentCategory, previousCategory: currentCategory})
+      this.initialize(currentCategory);
     }
     if (categories.length == 0){
       return null;

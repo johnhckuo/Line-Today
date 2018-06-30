@@ -1,32 +1,30 @@
 .headline {
-  padding-left: $horizon_padding;
-  padding-right: $horizon_padding;
-  padding-top: 30px;
+
+  @include container_initial_settings;
 
   &__digest {
     position: relative;
     border: 1px solid #ebebeb;
     overflow: hidden;
-    display: flex;
+    @include flex_row;
     margin-bottom: 50px;
-    @include phone {
-      display: none;
-    }
   }
 
   &__newsTitle{
-    display: flex;
-    flex-direction: column;
+    @include flex_column;
     justify-content: center;
   }
 
   &__image-swiper {
     position: relative;
-    display: flex;
+    @include flex_row;
     align-items: center;
     width: 65%;
+    @include phone{
+      width: 100%;
+    }
     ul{
-      display: flex;
+      @include flex_row;
       transition: all .5s;
     }
     li{
@@ -35,6 +33,9 @@
     img{
       width: 45vw;
       height: 45vh;
+      @include phone{
+        width: 100vw;
+      }
     }
     button{
       position: absolute;
@@ -69,26 +70,46 @@
     width: 35%;
     height: 100%;
     background: white;
-    display: flex;
-    flex-direction: column;
+    @include flex_column;
     justify-content: space-around;
     padding:50px 30px;
     box-sizing: border-box;
+
+    @include phone {
+      width: 100%;
+      height: 10%;
+      bottom: 50px;
+      background: rgba(0, 0 ,0, 0);
+      color: white;
+    }
+    
     h2{
+      @include phone{
+        font-size: 1.2rem;
+      }
+      @include tablet{
+        font-size: 1.5rem;
+      }
       font-size: 2.5rem;
       line-height: 1.2em;
       max-height: 3.6em;
-      overflow: hidden;
+      font-weight: bold;
     }
-    span:nth-child(2){
-      color: grey;
+    span{
+      @include phone{
+        display: none;
+      }
+      &:nth-child(2){
+        color: grey;
+      }
     }
+
   }
 
   &__otherCategories{
     width: 69%;
     @include phone {
-      width: 100%;
+      width: 80%;
     }
   }
 
@@ -98,19 +119,24 @@
 
   &__minorContent{
     width:100%;
-    display: flex;
-
+    @include flex_row;
+    @include phone{
+      padding-left: 13%;
+    }
   }
 
   &__hotNews{
     width: 31%;
+    @include phone{
+      display: none;
+    }
   }
 
   &__bulletControllers{
     position: absolute;
     bottom: 30px;
     width: 100%;
-    display: flex;
+    @include flex_row;
     justify-content: center;
     height: 10px;
     span{
@@ -140,7 +166,6 @@
         width: 90%;
       }
       a{
-        display: flex;
         width:100%;
         *{
           margin-bottom: 10px;
@@ -156,9 +181,6 @@
   }
 
   &__verticalNews{
-    a{
-      flex-direction: column;
-    }
 
     img{
       width: 100%;
@@ -169,6 +191,7 @@
   &__horizonNews{
     a{
       align-items: center;
+      @include flex_row;
     }
     img{
       margin-right: 10px;
