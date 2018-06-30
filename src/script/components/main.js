@@ -67,6 +67,7 @@ export default class Main extends React.Component{
               {...props} 
               categoryList = {this.categoryList} 
               categories={this.categories} 
+              windowWidth = {this.state.windowWidth}
               imageURL={this.imageURL}
               currentCategory = {this.state.currentCategory}
             />

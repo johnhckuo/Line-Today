@@ -115,7 +115,7 @@ export default class Category extends React.Component{
   }
 
   render(){
-    const {categories, categoryList, imageURL, currentCategory} = this.props;
+    const {categories, categoryList, imageURL, currentCategory, windowWidth} = this.props;
     this.categoryId = this.props.location.pathname.split("/").pop();
     if (categories.length > 0){
       var category = this.getCategory(categories);
@@ -161,6 +161,7 @@ export default class Category extends React.Component{
               categories={categories} 
               categoryList={categoryList}
               currentCategory = {currentCategory}
+              windowWidth = {windowWidth}
             />
           </div>
         </div>

@@ -8,19 +8,25 @@
   width: 100%;
   border-top: 1px solid #ebebeb;
   margin-top: 30px;
+  overflow: hidden;
   &__slider{
-    overflow: hidden;
+    display: flex;
     ul{
       display: flex;
       transition: all .5s;
     }
     li{
+      div{
+        width: 16vw;
+      }
+      float: left;
       *{
         margin-bottom: 8px;
       }
     }
     img{
-      width: 284px;
+      width: 20vw;
+      min-width: 16vw;
       height: 145px;
     }
   }

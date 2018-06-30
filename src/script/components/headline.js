@@ -148,7 +148,7 @@ export default class Headline extends React.Component{
     var bulletControllers = this.createBulletControllers();
     var currentDigest = digestList[this.state.currentDigest];
     var digestTransform = {
-        transform: `translateX(-${windowWidth * 0.565*this.state.currentDigest}px)`
+        transform: `translateX(-${windowWidth * 0.45*this.state.currentDigest}px)`
     };
 
     this.subCategoryLength = category.templates.length;
@@ -207,6 +207,7 @@ export default class Headline extends React.Component{
               categories={categories} 
               categoryList={categoryList} 
               currentCategory = {currentCategory}
+              windowWidth = {windowWidth}
             />
           </div>
         </div>

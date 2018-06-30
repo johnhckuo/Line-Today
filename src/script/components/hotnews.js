@@ -108,7 +108,7 @@ export default class Hotnews extends React.Component{
   }
 
   render(){
-    const {categories, categoryList, currentCategory} = this.props;
+    const {categories, categoryList, currentCategory, windowWidth} = this.props;
     if (currentCategory != this.state.previousCategory){
       this.setState({currentTab: currentCategory, previousCategory: currentCategory})
     }
@@ -121,7 +121,7 @@ export default class Hotnews extends React.Component{
     this.mostViewListLength = mostViewList.length;
     var rankingHeaderTransform = this.state.currentTab == 0 ? null : { transform: `translateX(-${72 + 49*(this.state.currentTab-1)}px)`};
 
-    var mostViewedTransform = { transform: `translateX(-${284*this.state.currentNews}px)`};
+    var mostViewedTransform = { transform: `translateX(-${0.2*windowWidth*this.state.currentNews}px)`};
     return(
       <div className="hotnews">
         <h3 className="global__title">熱門</h3>
@@ -158,7 +158,11 @@ export default class Hotnews extends React.Component{
             <ul style={mostViewedTransform}>
               {
                 mostViewList.map((mostViewed, index)=>{
-                  return <li key={index}><img src={this.imagePrefix + mostViewed.thumbnail.hash + this.imagePostfix}/><div>{mostViewed.title}</div><div className="global__publisher">{mostViewed.publisher}</div></li>
+                  return (<li key={index}>
+                      <img src={this.imagePrefix + mostViewed.thumbnail.hash + this.imagePostfix}/>
+                      <div>{mostViewed.title}</div>
+                      <div className="global__publisher">{mostViewed.publisher}</div>
+                    </li>);
                 })
               }
             </ul>
