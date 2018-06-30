@@ -3,3 +3,20 @@
     white-space: nowrap;
     transition: all .5s;
 }
+
+@mixin tablet {
+    @media screen and (max-width: $padWidth) {
+        @content;
+    }
+}
+@mixin phone {
+    @media screen and (max-width: $phoneWidth) {
+        @content;
+    }
+}
+
+@mixin pc {
+    @media screen and (max-width: $pcWidth) {
+        @content;
+    }
+}

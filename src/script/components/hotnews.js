@@ -15,12 +15,12 @@ export default class Hotnews extends React.Component{
   }
 
   componentDidMount(){
-    //var intervalId = setInterval(()=>{this.updateCurrentNews(1)}, 3000);
-    //this.setState({intervalId: intervalId});
+    var intervalId = setInterval(()=>{this.updateCurrentNews(1)}, 3000);
+    this.setState({intervalId: intervalId});
   }
 
   componentWillUnmount() {
-     //clearInterval(this.state.intervalId);
+    clearInterval(this.state.intervalId);
   }
 
   updateTab(type, id, categoryLength){
