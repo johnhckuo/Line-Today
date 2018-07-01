@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rimraf ./docs && webpack",
     "build:prod": "rimraf ./docs && webpack -p",
-    "dev": "webpack-dev-server --devtool eval --progress --colors --content-base build"
+    "dev": "webpack-dev-server --devtool eval --progress --colors --content-base build --open"
   },
   "keywords": [
     "react"

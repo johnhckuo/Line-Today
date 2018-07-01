@@ -31,10 +31,10 @@
       float: left;
     }
     img{
-      width: 45vw;
+      width: $pc_image_width;
       height: 45vh;
       @include phone{
-        width: 100vw;
+        width: $phone_image_width;
       }
     }
     button{
