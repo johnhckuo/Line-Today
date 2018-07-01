@@ -44,6 +44,7 @@ module.exports = {
       			use: extractPlugin.extract({
       			    use: [
       			        'css-loader',
+                    'postcss-loader',
       			        'sass-loader'
       			    ]
       			})
@@ -58,7 +59,6 @@ module.exports = {
       template: 'src/index.html'
     }),
     extractPlugin,
-    new CleanWebpackPlugin(['docs']),
     autoprefixer
   ]
 };
