@@ -21,7 +21,7 @@
 		li{
 			margin-bottom: 50px;
 			@include phone{
-				margin-bottom: 10px;
+				margin-bottom: 5px;
 			}
 			width:100%;
 			a{
@@ -36,7 +36,7 @@
 		}
 		img{
 			float: left;
-			width: 20vw;
+			width: 45%;
 			height: 20vh;
 
 			@include phone {

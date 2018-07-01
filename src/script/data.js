@@ -4,7 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true }); const data = {
   result: {
     lastModTime: 1530062817763,
     parentCategoryId: 0,
-    categoryList: [{ id: 100259, name: '今日頭條' }, { id: 100260, name: '娛樂' }, { id: 100262, name: '國內' }, { id: 100264, name: '生活' }, { id: 100516, name: '電影', type: 3 }, { id: 100437, name: '世足' }, { id: 100267, name: '國際' }, { id: 100265, name: '運動' }, { id: 100303, name: '理財' }, { id: 100261, name: '健康' }, { id: 100311, name: '鄉民' }, { id: 100470, name: '星座' }, { id: 100503, name: '美食' }, { id: 100525, name: '料理' }, { id: 100263, name: '旅遊' }, { id: 100483, name: '玩時尚' }, { id: 100506, name: '影音' }, { id: 100266, name: '科技' }, { id: 100497, name: '汽車' }, { id: 100485, name: '宅品味' }, { id: 100479, name: '遊戲' }, { id: 100463, name: '部落客' }, { id: 100457, name: 'NBA精華' }, { id: 100544, name: '台北電影節' }, { id: 100540, name: '選情專區' }],
+    categoryList: [{ id: 100259, name: '今日頭條' }, { id: 100260, name: '娛樂' }, { id: 100262, name: '國內' }, { id: 100264, name: '生活' }, { id: 100437, name: '世足' }, { id: 100267, name: '國際' }, { id: 100265, name: '運動' }, { id: 100303, name: '理財' }, { id: 100261, name: '健康' }, { id: 100311, name: '鄉民' }, { id: 100470, name: '星座' }, { id: 100503, name: '美食' }, { id: 100525, name: '料理' }, { id: 100263, name: '旅遊' }, { id: 100483, name: '玩時尚' }, { id: 100506, name: '影音' }, { id: 100266, name: '科技' }, { id: 100497, name: '汽車' }, { id: 100485, name: '宅品味' }, { id: 100479, name: '遊戲' }, { id: 100463, name: '部落客' }, { id: 100457, name: 'NBA精華' }, { id: 100544, name: '台北電影節' }, { id: 100540, name: '選情專區' }],
     categories: [{
       id: 100259,
       name: '今日頭條',

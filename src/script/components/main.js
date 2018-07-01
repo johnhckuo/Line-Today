@@ -24,8 +24,8 @@ export default class Main extends React.Component{
     }
 
     this.state = {
-      currentCategory: -1, 
-      windowWidth: 0, 
+      currentCategory: -1,
+      windowWidth: 0,
       currentCategory: 0,
       device: "pc"
     };
@@ -45,7 +45,7 @@ export default class Main extends React.Component{
   }
 
   updateWindowDimensions() {
-    var device;
+    let device;
     if (window.innerWidth <= styleVar.phone_width.split("px")[0]){
       device = "phone";
     }else if (window.innerWidth <= styleVar.pad_width.split("px")[0]){
@@ -53,9 +53,7 @@ export default class Main extends React.Component{
     }else{
       device = "pc";
     }
-
     this.setState({ windowWidth: window.innerWidth, device })
-
   }
 
   updateCurrentCategory(newCategory){
@@ -65,7 +63,7 @@ export default class Main extends React.Component{
   render(){
     return(
       <React.Fragment>
-        <Header categoryList = {this.categoryList} 
+        <Header categoryList = {this.categoryList}
           windowWidth = {this.state.windowWidth}
           currentCategory = {this.state.currentCategory}
           updateCurrentCategory = {this.updateCurrentCategory}
@@ -73,10 +71,10 @@ export default class Main extends React.Component{
         />
         <Switch>
           <Route exact path="/(|headline)/" render={props=>
-            <Headline 
-              {...props} 
-              categoryList = {this.categoryList} 
-              categories={this.categories} 
+            <Headline
+              {...props}
+              categoryList = {this.categoryList}
+              categories={this.categories}
               windowWidth = {this.state.windowWidth}
               imageURL={this.imageURL}
               currentCategory = {this.state.currentCategory}
@@ -85,10 +83,10 @@ export default class Main extends React.Component{
             />
           } />
           <Route exact path="/:id" render={props=>
-            <Category 
-              {...props} 
-              categoryList = {this.categoryList} 
-              categories={this.categories} 
+            <Category
+              {...props}
+              categoryList = {this.categoryList}
+              categories={this.categories}
               windowWidth = {this.state.windowWidth}
               imageURL={this.imageURL}
               currentCategory = {this.state.currentCategory}

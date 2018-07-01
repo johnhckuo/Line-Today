@@ -13,22 +13,23 @@ export default class Headline extends React.Component{
     this.loadSubCategoriesContent = this.loadSubCategoriesContent.bind(this);
     this.loadSubCategoriesTitle = this.loadSubCategoriesTitle.bind(this);
     this.updateCurrentSubCategory = this.updateCurrentSubCategory.bind(this);
-    this.slider = this.slider.bind(this);
+    this.updateSubCategorySlider = this.updateSubCategorySlider.bind(this);
+    this.getDigestTransform = this.getDigestTransform.bind(this);
 
     this.digestListLength = 0;
     this.subCategoryLength = 0;
     this.sliderProgressLimit = 4;
-    
+
     this.state = {
-      currentDigest: 0, 
-      intervalId: null, 
-      currentSubCategory: 1, 
+      currentDigest: 0,
+      intervalId: null,
+      currentSubCategory: 1,
       sliderProgress: 0
     };
   }
 
   componentDidMount(){
-    var intervalId = setInterval(()=>{this.swipeDigest(1)}, 3000);
+    let intervalId = setInterval(()=>{this.swipeDigest(1)}, 3000);
     this.setState({intervalId: intervalId});
   }
 
@@ -37,36 +38,28 @@ export default class Headline extends React.Component{
   }
 
   loadDigest(category){
-    var digestList = [];
-    for (var i = 0 ; i < category.templates[0].sections.length ; i++){
-      var section = category.templates[0].sections[i];
-      for (var j = 0 ; j < section.articles.length ; j++){
-        var article = section.articles[j];
+    let digestList = [];
+    for (let i = 0 ; i < category.templates[0].sections.length ; i++){
+      let section = category.templates[0].sections[i];
+      for (let j = 0 ; j < section.articles.length ; j++){
+        let article = section.articles[j];
         digestList.push(article);
       }
     }
     return digestList;
   }
 
-  loadSubCategoriesContent(category, imageURL, device){
-    var newsList = [];
-    var template = category.templates[this.state.currentSubCategory];
-    for (var j = 0 ; j < template.sections.length ; j++){
-      var articles = template.sections[j].articles;
-      for (var z = 0 ; z < articles.length ; z++){
-        var article = articles[z];
-        if (typeof article.title == "undefined"){
-          continue;
-        }
-        var newsType = "headline__horizonNews";
-        if (j == 0 && z < 4 && device == "pc"){
-          newsType = "headline__verticalNews";
-        }
-
+  loadSubCategoriesContent(){
+    let category = this.props.categories[0], newsList = [];
+    let sections = category.templates[this.state.currentSubCategory].sections;
+    for (let j = 0 ; j < sections.length ; j++){
+      for (let z = 0 ; z < sections[j].articles.length ; z++){
+        let article = sections[j].articles[z];
+        if (typeof article.title == "undefined") continue;
         newsList.push(
-          <li className={newsType} key={article.id}>
+          <li className={j == 0 && z < 4 && this.props.device == "pc" ? "headline__verticalNews" : "headline__horizonNews"} key={article.id}>
             <a href={article.url.url}>
-              <img alt="newsImage" src={imageURL.imagePrefix + article.thumbnail.hash + imageURL.imagePostfix}/>
+              <img alt="newsImage" src={this.props.imageURL.imagePrefix + article.thumbnail.hash + this.props.imageURL.imagePostfix}/>
               <div className="headline__newsTitle">
                 <div>{article.title}</div>
                 <div className="global__publisher">{article.publisher}</div>
@@ -79,12 +72,13 @@ export default class Headline extends React.Component{
     return newsList;
   }
 
-  loadSubCategoriesTitle(category){
-    var subCategoryTitles = [];
-    for (var i = 0 ; i < this.subCategoryLength ; i++){
-      var subCategory = category.templates[i];
+  loadSubCategoriesTitle(){
+    let category = this.props.categories[0];
+    let subCategoryTitles = [];
+    for (let i = 0 ; i < this.subCategoryLength ; i++){
+      let subCategory = category.templates[i];
       if (typeof subCategory.title != 'undefined'){
-        var chosenCategoryClass = "";
+        let chosenCategoryClass = "";
         if (this.state.currentSubCategory == i){
           chosenCategoryClass = "chosenSubCategory";
         }
@@ -103,9 +97,9 @@ export default class Headline extends React.Component{
     if (this.state.intervalId != null){
       clearInterval(this.state.intervalId);
     }
-    var intervalId = setInterval(()=>{this.swipeDigest(1)}, 3000);
+    let intervalId = setInterval(()=>{this.swipeDigest(1)}, 3000);
 
-    var {currentDigest} = this.state;
+    let {currentDigest} = this.state;
     if (offset == 0 && jumpto != "undefined"){
       currentDigest = jumpto;
     }else{
@@ -122,16 +116,16 @@ export default class Headline extends React.Component{
   }
 
   createBulletControllers(){
-    var bulletControllers = [];
-    for (var i = 0 ; i < this.digestListLength ; i++){
+    let bulletControllers = [];
+    for (let i = 0 ; i < this.digestListLength ; i++){
       bulletControllers.push(<span key={i} data-index={i} className={this.state.currentDigest == i ? "activeBullet" : "inactiveBullet"}></span>)
     }
     return bulletControllers;
   }
 
-  slider(increment){
+  updateSubCategorySlider(increment){
     this.setState(prevState=>{
-      var sliderProgress = prevState.sliderProgress;
+      let sliderProgress = prevState.sliderProgress;
       sliderProgress += increment;
       if (sliderProgress < 0){
         sliderProgress = this.sliderProgressLimit;
@@ -142,37 +136,40 @@ export default class Headline extends React.Component{
     });
   }
 
-  render(){
-    const {categories, windowWidth, categoryList, imageURL, currentCategory, device} = this.props;
-    if (categories.length == 0){
-      return null;
-    }
-    var category = categories[0];
-    var digestList = this.loadDigest(category);
-    this.digestListLength = digestList.length;
-    var bulletControllers = this.createBulletControllers();
-    var currentDigest = digestList[this.state.currentDigest];
-
-    var offset = 0;
-    if (device == "phone"){
+  getDigestTransform(){
+    let offset = 0;
+    if (this.props.device == "phone"){
       offset = styleVar.phone_image_width;
     }else{
       offset = styleVar.pc_image_width;
     }
     offset = offset.split("vw")[0] / 100;
 
-    var digestTransform = {
-        transform: `translateX(-${windowWidth * offset *this.state.currentDigest}px)`
+    return {
+        transform: `translateX(-${this.props.windowWidth * offset *this.state.currentDigest}px)`
     };
 
-    this.subCategoryLength = category.templates.length;
-    var newsContent = this.loadSubCategoriesContent(category, imageURL, device);
-    var newsTitle = this.loadSubCategoriesTitle(category);
+  }
 
-    var subCategoryTransform = {
+  render(){
+    const {categories, windowWidth, categoryList, imageURL, currentCategory} = this.props;
+    if (categories.length <= 0) return null;
+
+    let category = categories[0];
+    this.subCategoryLength = category.templates.length;
+    let digestList = this.loadDigest(category);
+    this.digestListLength = digestList.length;
+
+    let bulletControllers = this.createBulletControllers();
+    let currentDigest = digestList[this.state.currentDigest];
+    let digestTransform = this.getDigestTransform();
+    let newsContent = this.loadSubCategoriesContent();
+    let newsTitle = this.loadSubCategoriesTitle();
+
+    let subCategoryTransform = {
       transform: `translateX(-${windowWidth/3*this.state.sliderProgress}px)`
-    }; 
-    
+    };
+
     return(
       <div className="headline">
         <div className="headline__digest">
@@ -207,8 +204,8 @@ export default class Headline extends React.Component{
                 </ul>
               </div>
               <div className="global__sliderController">
-                <button onClick={()=>{this.slider(-1)}} className="global__previousCategory"></button>
-                <button onClick={()=>{this.slider(1)}} className="global__nextCategory"></button>
+                <button onClick={()=>{this.updateSubCategorySlider(-1)}} className="global__previousCategory"></button>
+                <button onClick={()=>{this.updateSubCategorySlider(1)}} className="global__nextCategory"></button>
               </div>
             </div>
             <div className="headline__subCategoryContents">
@@ -218,11 +215,12 @@ export default class Headline extends React.Component{
             </div>
           </div>
           <div className="headline__hotNews">
-            <Hotnews 
-              categories={categories} 
-              categoryList={categoryList} 
+            <Hotnews
+              categories={categories}
+              categoryList={categoryList}
               currentCategory = {currentCategory}
               windowWidth = {windowWidth}
+              imageURL = {imageURL}
             />
           </div>
         </div>

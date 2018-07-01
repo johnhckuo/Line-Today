@@ -12,19 +12,18 @@ export default class Hotnews extends React.Component{
     this.initialize = this.initialize.bind(this);
 
     this.mostViewListLength = 0;
-    this.imagePrefix = "https://obs.line-scdn.net/";
-    this.imagePostfix = "/w1200";
+    this.rankListLimit = 10;
 
     this.state = {
-      currentTab: this.props.currentCategory, 
-      currentNews: 0, 
-      intervalId: null, 
+      currentTab: this.props.currentCategory,
+      currentNews: 0,
+      intervalId: null,
       prviousCategory: this.props.currentCategory
     }
   }
 
   componentDidMount(){
-    var intervalId = setInterval(()=>{this.updateCurrentNews(1)}, 3000);
+    let intervalId = setInterval(()=>{this.updateCurrentNews(1)}, 3000);
     this.setState({intervalId: intervalId});
   }
 
@@ -32,27 +31,27 @@ export default class Hotnews extends React.Component{
     clearInterval(this.state.intervalId);
   }
 
-  updateTab(type, id, categoryLength){
+  updateTab(type, id){
     if (type == "specify"){
       this.setState({currentTab: id})
     }else if (type == "increment"){
       this.setState((prevState)=>{
-        var currentTab = prevState.currentTab + id;
+        let currentTab = prevState.currentTab + id;
         if (currentTab < 0){
-          currentTab = categoryLength - 1;
+          currentTab = this.props.categoryList.length - 1;
         }
-        return {currentTab : currentTab % categoryLength}
+        return {currentTab : currentTab % this.props.categoryList.length}
       })
     }
   }
 
-  loadHotNews(categories){
-    var articles = categories[this.state.currentTab].templates;
+  loadHotNews(){
+    let articles = this.props.categories[this.state.currentTab].templates;
     articles = articles[articles.length-1].sections[0].articles;
 
-    var newsList = [];
-    for (var i = 0 ; i < articles.length ; i++){
-      if ( i >= 10){
+    let newsList = [];
+    for (let i = 0 ; i < articles.length ; i++){
+      if ( i >= this.rankListLimit){
         break;
       }
       newsList.push(<li key={i}>
@@ -65,18 +64,18 @@ export default class Hotnews extends React.Component{
     return newsList;
   }
 
-  loadMostViewNews(categories){
-    var newsList = [];
-    for (var x = 0 ; x < categories.length ; x++){
-      var category = categories[x];
-      for (var i = 1 ; i < category.templates.length ; i++){
-        var maxViewCounts = 0, maxViewNews = null;
-        var sections = category.templates[i].sections;
-        for (var j = 0 ; j < sections.length ; j++){
-          var articles = category.templates[i].sections[j].articles;
-          for (var z = 0 ; z < articles.length ; z++){
+  loadMostViewNews(){
+    let newsList = [];
+    for (let x = 0 ; x < this.props.categories.length ; x++){
+      let category = this.props.categories[x], maxViewNews = null;
+      for (let i = 1 ; i < category.templates.length ; i++){
+        let maxViewCounts = 0;
+        let sections = category.templates[i].sections;
+        for (let j = 0 ; j < sections.length ; j++){
+          let articles = category.templates[i].sections[j].articles;
+          for (let z = 0 ; z < articles.length ; z++){
 
-            var article = articles[z];
+            let article = articles[z];
             if (typeof article.title == "undefined"){
               continue;
             }
@@ -105,10 +104,10 @@ export default class Hotnews extends React.Component{
     if (this.state.intervalId != null){
       clearInterval(this.state.intervalId);
     }
-    var intervalId = setInterval(()=>{this.updateCurrentNews(1)}, 3000);
+    let intervalId = setInterval(()=>{this.updateCurrentNews(1)}, 3000);
 
     this.setState(prevState=>{
-      var currentNews = prevState.currentNews;
+      let currentNews = prevState.currentNews;
       currentNews += increment;
       if (currentNews < 0){
         currentNews = this.mostViewListLength - 1;
@@ -122,19 +121,15 @@ export default class Hotnews extends React.Component{
 
   render(){
     const {categories, categoryList, currentCategory, windowWidth} = this.props;
-    if (currentCategory != this.state.previousCategory){
-      this.initialize(currentCategory);
-    }
-    if (categories.length == 0){
-      return null;
-    }
-    var hotNewsList = this.loadHotNews(categories);
-    var categoryLength = categoryList.length;
-    var mostViewList = this.loadMostViewNews(categories);
-    this.mostViewListLength = mostViewList.length;
-    var rankingHeaderTransform = this.state.currentTab == 0 ? null : { transform: `translateX(-${72 + 49*(this.state.currentTab-1)}px)`};
+    if (categories.length == 0) return null;
 
-    var mostViewedTransform = { transform: `translateX(-${0.2*windowWidth*this.state.currentNews}px)`};
+    if (currentCategory != this.state.previousCategory) this.initialize(currentCategory);
+    let hotNewsList = this.loadHotNews();
+    let mostViewList = this.loadMostViewNews();
+    this.mostViewListLength = mostViewList.length;
+    let rankingHeaderTransform = this.state.currentTab == 0 ? null : { transform: `translateX(-${72 + 49*(this.state.currentTab-1)}px)`};
+    let mostViewedTransform = { transform: `translateX(-${0.2*windowWidth*this.state.currentNews}px)`};
+
     return(
       <div className="hotnews">
         <h3 className="global__title">熱門</h3>
@@ -143,15 +138,14 @@ export default class Hotnews extends React.Component{
             <ul style={rankingHeaderTransform}>
               {
                 categoryList.map((category, index)=>{
-                  return <li key={index} className={index == this.state.currentTab ? "currentTab" : null}><a onClick={()=>{this.updateTab('specify', index, categoryLength)}}>{category.name}</a></li>;
+                  return <li key={index} className={index == this.state.currentTab ? "currentTab" : null}><a onClick={()=>{this.updateTab('specify', index)}}>{category.name}</a></li>;
                 })
-
               }
             </ul>
           </div>
           <div className="global__sliderController">
-            <button aria-label="previousBtn" onClick={()=>{this.updateTab('increment', -1, categoryLength)}} className="global__previousCategory"></button>
-            <button aria-label="nextBtn" onClick={()=>{this.updateTab('increment', 1, categoryLength)}} className="global__nextCategory"></button>
+            <button aria-label="previousBtn" onClick={()=>{this.updateTab('increment', -1)}} className="global__previousCategory"></button>
+            <button aria-label="nextBtn" onClick={()=>{this.updateTab('increment', 1)}} className="global__nextCategory"></button>
           </div>
         </div>
         <div className="categoryRanking__content">
@@ -172,7 +166,7 @@ export default class Hotnews extends React.Component{
               {
                 mostViewList.map((mostViewed, index)=>{
                   return (<li key={index}>
-                      <img alt="newsImage" src={this.imagePrefix + mostViewed.thumbnail.hash + this.imagePostfix}/>
+                      <img alt="newsImage" src={this.props.imageURL.imagePrefix + mostViewed.thumbnail.hash + this.props.imageURL.imagePostfix}/>
                       <div>{mostViewed.title}</div>
                       <div className="global__publisher">{mostViewed.publisher}</div>
                     </li>);

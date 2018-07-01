@@ -3,6 +3,6 @@
   "plugins": [
     "react"
   ],
-  "env": { "browser": true },
+  "env": { "browser": true, "amd": true, "es6": true, "commonjs": true,},
   "extends": ["eslint:recommended", "plugin:react/recommended"]
 }

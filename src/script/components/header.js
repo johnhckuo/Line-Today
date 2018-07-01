@@ -10,60 +10,41 @@ export default class Header extends React.Component{
     this.generateMoreList = this.generateMoreList.bind(this);
   }
 
-  generateNavList(categoryList, maxItems, currentCategory){
-
-    var navList = [];
-
-    //visible categories
-    for (var i = 0 ; i < categoryList.length ; i++){
-      var category = categoryList[i]
-      var id = category.id;
+  generateNavList(maxItems){
+    let list = [];
+    let categoryList = this.props.categoryList;
+    for (let i = 0 ; i < categoryList.length ; i++){
       if (i >= maxItems){
         break;
       }
-      if (i == 0){
-        id = "headline";
-      }
-      var currentCategoryStyle = "";
-      if (i == currentCategory){
-        currentCategoryStyle = "currentCategory";
-      }
-      navList.push(<li key={i} className="header__visible-link"><Link onClick={this.props.updateCurrentCategory.bind(this, i)} className={currentCategoryStyle} key={i} to={`/${id}`}>{category.name}</Link></li>);
+      list.push(<li key={i} className="header__visible-link"><Link onClick={this.props.updateCurrentCategory.bind(this, i)} className={i == this.props.currentCategory ? "currentCategory" : ""} key={i} to={`/${i==0 ? "headline" : categoryList[i].id}`}>{categoryList[i].name}</Link></li>);
     }
 
-    return navList;
+    return list;
   }
 
-  generateMoreList(categoryList, startIndex, currentCategory){
-    //remain categories
-    var moreList = [];
-    for (var j = startIndex ; j < categoryList.length ; j++){
-      var category = categoryList[j]
-      var id = category.id;
-
-      var currentCategoryStyle = "";
-      if (j == currentCategory){
-        currentCategoryStyle = "currentCategory";
-      }
-
-      moreList.push(<li key={j}><Link className={currentCategoryStyle} onClick={this.props.updateCurrentCategory.bind(this, j)} key={j} to={`/${id}`}>{category.name}</Link></li>);
+  generateMoreList(startIndex){
+    let list = [];
+    let categoryList = this.props.categoryList;
+    for (let j = startIndex ; j < categoryList.length ; j++){
+      list.push(<li key={j}><Link className={j == this.props.currentCategory ? "currentCategory" : ""} onClick={this.props.updateCurrentCategory.bind(this, j)} key={j} to={`/${categoryList[j].id}`}>{categoryList[j].name}</Link></li>);
     }
-    return moreList;
+    return list;
   }
 
   render(){
-    const {categoryList, windowWidth, currentCategory, device} = this.props;
+    const {windowWidth, device} = this.props;
     const header_item_width = parseInt(styleVar.header_item_width);
-    
-    var maxItems;
+
+    let maxItems;
     if (device == "tablet" || device == "phone"){
       maxItems = windowWidth;
     }else{
       maxItems = parseInt(windowWidth / 3);
       maxItems = parseInt(maxItems / (header_item_width + 16*2))
     }
-    var navList = this.generateNavList(categoryList, maxItems, currentCategory);
-    var moreList = this.generateMoreList(categoryList, navList.length, currentCategory);
+    let navList = this.generateNavList(maxItems);
+    let moreList = this.generateMoreList(navList.length);
 
     return (
         <header className = "header">
