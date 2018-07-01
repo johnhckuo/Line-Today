@@ -19,12 +19,15 @@
 	&__news{
 		width: 100%;
 		li{
-			display: inline-block;
 			margin-bottom: 50px;
 			@include phone{
 				margin-bottom: 10px;
 			}
 			width:100%;
+			a{
+				@include flex_row;
+		    	align-items: center;
+			}
 		}
 		h3{
 			@include phone {
