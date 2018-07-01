@@ -65,7 +65,7 @@ export default class Headline extends React.Component{
         newsList.push(
           <li className={newsType} key={article.id}>
             <a href={article.url.url}>
-              <img src={imageURL.imagePrefix + article.thumbnail.hash + imageURL.imagePostfix}/>
+              <img alt="newsImage" src={imageURL.imagePrefix + article.thumbnail.hash + imageURL.imagePostfix}/>
               <div className="headline__newsTitle">
                 <div>{article.title}</div>
                 <div className="global__publisher">{article.publisher}</div>
@@ -182,7 +182,7 @@ export default class Headline extends React.Component{
             {
               digestList.map((article, index)=>{
                 return (
-                      <li key={index}><a href={article.url.url}><img src={imageURL.imagePrefix + article.thumbnail.hash + imageURL.imagePostfix}/></a></li>
+                      <li key={index}><a href={article.url.url}><img alt="newsImage" src={imageURL.imagePrefix + article.thumbnail.hash + imageURL.imagePostfix}/></a></li>
                 );
               })
             }

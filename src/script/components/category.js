@@ -39,7 +39,7 @@ export default class Category extends React.Component{
           newsList.push(
             <li key={article.id}  className={isFirstElement ? "firstNews" : ""}>
               <a href={article.url.url}>
-                <img src={imageURL.imagePrefix + article.thumbnail.hash + imageURL.imagePostfix}/>
+                <img alt="newsImage" src={imageURL.imagePrefix + article.thumbnail.hash + imageURL.imagePostfix}/>
                 <div className="category__newsTitle">
                   <p>{article.title}</p>
                   <div className="global__publisher">{article.publisher}</div>
@@ -66,7 +66,7 @@ export default class Category extends React.Component{
         newsList.push(
           <li key={article.id}>
             <a href={article.url.url}>
-              <img src={imageURL.imagePrefix + article.thumbnail.hash + imageURL.imagePostfix}/>
+              <img alt="newsImage" src={imageURL.imagePrefix + article.thumbnail.hash + imageURL.imagePostfix}/>
               <div className="category__newsTitle">
                 <p>{article.title}</p>
                 <div className="global__publisher">{article.publisher}</div>

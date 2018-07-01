@@ -52,7 +52,9 @@ button{
 	    width: 30px;
 	    height: 20px;
 	    background: linear-gradient(90deg,hsla(0,0%,100%,0) 0,#fff 70%);
-
+	    @include tablet{
+	    	display: none;
+	    }
 		button{
 			position: absolute;
 		    top: 0px;
@@ -96,6 +98,9 @@ button{
 	&__subCategoryTitles{
 		width: 90%;
 		overflow: hidden;
+		@include tablet{
+			overflow-x: scroll;
+		}
 		position: relative;
 		margin-bottom: 10px;
 

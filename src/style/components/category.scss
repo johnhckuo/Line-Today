@@ -1,12 +1,17 @@
 .category{
 	@include flex_row;
 	@include container_initial_settings;
+	justify-content: center;
 	&__container{
 		@include flex_column;
+		width: 70%;
 	}
 	&__hotnews{
 		width: 30%;
 		margin-left: 50px;
+		@include phone {
+			display: none;
+		}
 	}
 	&__news{
 		width: 100%;
@@ -14,10 +19,6 @@
 			display: inline-block;
 			margin-bottom: 50px;
 			width:100%;
-			@include phone {
-				width: 80%;
-				padding-left: 10%;
-			}
 		}
 		h3{
 			@include phone {
@@ -53,9 +54,9 @@
 				background: rgba(0, 0, 0, 0.6);
 			}
 			@include phone {
-				width: 100%;
+				width: 100vw;
 				padding-left: 0%;
-
+				margin-left: -21%;
 			}
 		}
 	}

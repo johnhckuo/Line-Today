@@ -32,6 +32,9 @@ $header_height: 90px;
   	&__visible-list {
   		align-items: center;
       @include horizontal_list;
+      @include tablet{
+        overflow-x: scroll;
+      }
   	}
 
   	&__visible-link{

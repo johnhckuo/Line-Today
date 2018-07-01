@@ -9,6 +9,12 @@ npm install
 
 # build and run locally
 npm run dev
+
+# to build this project
+npm run build
+
+# build this project under production mode
+npm run build:prod
 ```
 
 ## Powered by

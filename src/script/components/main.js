@@ -3,6 +3,7 @@ import { Route, Redirect, Switch } from 'react-router-dom'
 import Header from "./header"
 import Headline from "./headline"
 import Category from "./category"
+import styleVar from '../../style/utilities/variables.scss'
 
 import data from "../data"
 
@@ -10,6 +11,10 @@ export default class Main extends React.Component{
 
   constructor(props){
     super(props);
+
+    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    this.updateCurrentCategory = this.updateCurrentCategory.bind(this);
+
     this.DataSource = "https://today.line.me/tw/portaljson";
     this.categoryList = [];
     this.categories = [];
@@ -17,9 +22,14 @@ export default class Main extends React.Component{
       imagePrefix: "https://obs.line-scdn.net/",
       imagePostfix: "/w1200"
     }
-    this.state = {currentCategory: -1, windowWidth: 0, currentCategory: 0};
-    this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-    this.updateCurrentCategory = this.updateCurrentCategory.bind(this);
+
+    this.state = {
+      currentCategory: -1, 
+      windowWidth: 0, 
+      currentCategory: 0,
+      device: "pc"
+    };
+
   }
 
   componentDidMount(){
@@ -35,7 +45,17 @@ export default class Main extends React.Component{
   }
 
   updateWindowDimensions() {
-    this.setState({ windowWidth: window.innerWidth })
+    var device;
+    if (window.innerWidth <= styleVar.phone_width.split("px")[0]){
+      device = "phone";
+    }else if (window.innerWidth <= styleVar.pad_width.split("px")[0]){
+      device = "tablet";
+    }else{
+      device = "pc";
+    }
+
+    this.setState({ windowWidth: window.innerWidth, device })
+
   }
 
   updateCurrentCategory(newCategory){
@@ -49,6 +69,7 @@ export default class Main extends React.Component{
           windowWidth = {this.state.windowWidth}
           currentCategory = {this.state.currentCategory}
           updateCurrentCategory = {this.updateCurrentCategory}
+          device = {this.state.device}
         />
         <Switch>
           <Route exact path="/(|headline)/" render={props=>

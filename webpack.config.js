@@ -59,13 +59,6 @@ module.exports = {
     }),
     extractPlugin,
     new CleanWebpackPlugin(['docs']),
-    new Webpack.LoaderOptionsPlugin({
-      options: {
-        context: __dirname,
-        postcss: [
-          autoprefixer
-        ]
-      }
-    })
+    autoprefixer
   ]
 };

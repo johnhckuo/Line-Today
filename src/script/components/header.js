@@ -2,7 +2,6 @@ import React from "react"
 import { Link } from 'react-router-dom'
 import styleVar from '../../style/utilities/variables.scss'
 
-
 export default class Header extends React.Component{
 
   constructor(props){
@@ -53,10 +52,16 @@ export default class Header extends React.Component{
   }
 
   render(){
-    const {categoryList, windowWidth, currentCategory} = this.props;
+    const {categoryList, windowWidth, currentCategory, device} = this.props;
     const header_item_width = parseInt(styleVar.header_item_width);
-    var maxItems = parseInt(windowWidth / 6);
-    maxItems = parseInt(maxItems / (header_item_width + 16*2))
+    
+    var maxItems;
+    if (device == "tablet" || device == "phone"){
+      maxItems = windowWidth;
+    }else{
+      maxItems = parseInt(windowWidth / 3);
+      maxItems = parseInt(maxItems / (header_item_width + 16*2))
+    }
     var navList = this.generateNavList(categoryList, maxItems, currentCategory);
     var moreList = this.generateMoreList(categoryList, navList.length, currentCategory);
 

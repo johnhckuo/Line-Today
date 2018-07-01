@@ -172,7 +172,7 @@ export default class Hotnews extends React.Component{
               {
                 mostViewList.map((mostViewed, index)=>{
                   return (<li key={index}>
-                      <img src={this.imagePrefix + mostViewed.thumbnail.hash + this.imagePostfix}/>
+                      <img alt="newsImage" src={this.imagePrefix + mostViewed.thumbnail.hash + this.imagePostfix}/>
                       <div>{mostViewed.title}</div>
                       <div className="global__publisher">{mostViewed.publisher}</div>
                     </li>);
