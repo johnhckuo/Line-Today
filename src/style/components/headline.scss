@@ -137,6 +137,9 @@
     @include flex_row;
     justify-content: center;
     height: 10px;
+    @include phone{
+      bottom: 15px;
+    }
     span{
       display: inline-block;
       width: 6px;

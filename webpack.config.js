@@ -49,6 +49,14 @@ module.exports = {
       			    ]
       			})
       	},
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          loader: 'eslint-loader',
+          options: {
+            fix: true
+          }
+        },
         {test: /\.jpg$/, use: 'url-loader?mimetype=image/jpg'},
         {test: /\.png$/, use: 'url-loader?mimetype=image/png'},
         { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
