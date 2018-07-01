@@ -1,19 +1,28 @@
-$header_height: 90px;
 .header{
 
     position: relative;
   	width: 100%;
   	top: 0;
   	left: 0;
-  	height: $header_height;
+  	height: 90px;
     padding-left: $horizon_padding;
     padding-right: $horizon_padding;
   	box-sizing: border-box;
   	background-color: #202020;
+    @include phone{
+      height: 60px;
+      padding-left: 0px;
+      padding-right: 0px;
+      margin-top: 10px;
+      background: white;
+    }
 
   	h1 {
       color: white;
       font-size: 1.5rem;
+      @include phone{
+        color: black;
+      }
   	}
 
   	nav {
@@ -21,10 +30,15 @@ $header_height: 90px;
   	}
 
     a {
-      display: block;
       text-align: center;
       padding-left:#{$header_item_width/2}px;
       padding-right:#{$header_item_width/2}px;
+      @include flex_row;
+      align-items: center;
+      @include phone{
+        padding-left:8px;
+        padding-right:8px;
+      }
       transition: all 0.5s;
       height: 100%;
     }
@@ -32,15 +46,14 @@ $header_height: 90px;
   	&__visible-list {
   		align-items: center;
       @include horizontal_list;
+      height: 100%;
       @include tablet{
         overflow-x: scroll;
       }
   	}
 
   	&__visible-link{
-  		display: inline-block;
       height: 100%;
-      line-height: $header_height;
       color: grey;
       &:hover {
         color: white;
@@ -61,6 +74,9 @@ $header_height: 90px;
 
     &__more{
       display: inline-block;
+      @include phone{
+        display: none;
+      }
       &:hover ul{
         display: inline-block;
       }
@@ -95,6 +111,9 @@ $header_height: 90px;
     }
 
     &__login-button{
+      @include phone{
+        display: none;
+      }
       position: absolute;
       top: 0;
       right: $horizon_padding;
@@ -109,7 +128,7 @@ $header_height: 90px;
         box-sizing: border-box;
         width: 100%;
         height: 100%;
-        line-height: $header_height;
+        line-height: 90px;
         font-size: 16px;
         color: grey;
         background-color: #202020;
@@ -118,5 +137,8 @@ $header_height: 90px;
     .currentCategory{
       color: white;
       font-weight: bold;
+      @include phone{
+        color: black;
+      }
     }
 }

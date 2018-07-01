@@ -81,6 +81,7 @@ export default class Main extends React.Component{
               imageURL={this.imageURL}
               currentCategory = {this.state.currentCategory}
               updateCurrentCategory = {this.updateCurrentCategory}
+              device = {this.state.device}
             />
           } />
           <Route exact path="/:id" render={props=>
@@ -91,6 +92,7 @@ export default class Main extends React.Component{
               windowWidth = {this.state.windowWidth}
               imageURL={this.imageURL}
               currentCategory = {this.state.currentCategory}
+              device = {this.state.device}
             />
           }/>
         </Switch>

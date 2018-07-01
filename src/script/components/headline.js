@@ -17,6 +17,7 @@ export default class Headline extends React.Component{
 
     this.digestListLength = 0;
     this.subCategoryLength = 0;
+    this.sliderProgressLimit = 4;
     
     this.state = {
       currentDigest: 0, 
@@ -47,7 +48,7 @@ export default class Headline extends React.Component{
     return digestList;
   }
 
-  loadSubCategoriesContent(category, imageURL){
+  loadSubCategoriesContent(category, imageURL, device){
     var newsList = [];
     var template = category.templates[this.state.currentSubCategory];
     for (var j = 0 ; j < template.sections.length ; j++){
@@ -58,7 +59,7 @@ export default class Headline extends React.Component{
           continue;
         }
         var newsType = "headline__horizonNews";
-        if (j == 0 && z < 4){
+        if (j == 0 && z < 4 && device == "pc"){
           newsType = "headline__verticalNews";
         }
 
@@ -133,8 +134,8 @@ export default class Headline extends React.Component{
       var sliderProgress = prevState.sliderProgress;
       sliderProgress += increment;
       if (sliderProgress < 0){
-        sliderProgress = 3;
-      }else if (sliderProgress >= 3){
+        sliderProgress = this.sliderProgressLimit;
+      }else if (sliderProgress >= this.sliderProgressLimit){
         sliderProgress = 0;
       }
       return {sliderProgress};
@@ -142,7 +143,7 @@ export default class Headline extends React.Component{
   }
 
   render(){
-    const {categories, windowWidth, categoryList, imageURL, currentCategory} = this.props;
+    const {categories, windowWidth, categoryList, imageURL, currentCategory, device} = this.props;
     if (categories.length == 0){
       return null;
     }
@@ -153,7 +154,7 @@ export default class Headline extends React.Component{
     var currentDigest = digestList[this.state.currentDigest];
 
     var offset = 0;
-    if (windowWidth <= styleVar.phone_width.split("px")[0]){
+    if (device == "phone"){
       offset = styleVar.phone_image_width;
     }else{
       offset = styleVar.pc_image_width;
@@ -165,7 +166,7 @@ export default class Headline extends React.Component{
     };
 
     this.subCategoryLength = category.templates.length;
-    var newsContent = this.loadSubCategoriesContent(category, imageURL);
+    var newsContent = this.loadSubCategoriesContent(category, imageURL, device);
     var newsTitle = this.loadSubCategoriesTitle(category);
 
     var subCategoryTransform = {
@@ -176,8 +177,8 @@ export default class Headline extends React.Component{
       <div className="headline">
         <div className="headline__digest">
           <div className="headline__image-swiper">
-            <button onClick={()=>{this.swipeDigest(-1)}} className="headline__swiper-previous" />
-            <button onClick={()=>{this.swipeDigest(1)}} className="headline__swiper-next" />
+            <button aria-label="previousBtn" onClick={()=>{this.swipeDigest(-1)}} className="headline__swiper-previous" />
+            <button aria-label="nextBtn" onClick={()=>{this.swipeDigest(1)}} className="headline__swiper-next" />
             <ul style={digestTransform} >
             {
               digestList.map((article, index)=>{

@@ -150,8 +150,8 @@ export default class Hotnews extends React.Component{
             </ul>
           </div>
           <div className="global__sliderController">
-            <button onClick={()=>{this.updateTab('increment', -1, categoryLength)}} className="global__previousCategory"></button>
-            <button onClick={()=>{this.updateTab('increment', 1, categoryLength)}} className="global__nextCategory"></button>
+            <button aria-label="previousBtn" onClick={()=>{this.updateTab('increment', -1, categoryLength)}} className="global__previousCategory"></button>
+            <button aria-label="nextBtn" onClick={()=>{this.updateTab('increment', 1, categoryLength)}} className="global__nextCategory"></button>
           </div>
         </div>
         <div className="categoryRanking__content">
@@ -163,8 +163,8 @@ export default class Hotnews extends React.Component{
           <div className="mostViewCategory__header">
             <h3 className="global__title">熱門消息</h3>
             <div className="global__sliderController">
-              <button onClick={()=>{this.updateCurrentNews(-1)}} className="global__previousCategory"></button>
-              <button onClick={()=>{this.updateCurrentNews(1)}} className="global__nextCategory"></button>
+              <button aria-label="previousBtn" onClick={()=>{this.updateCurrentNews(-1)}} className="global__previousCategory"></button>
+              <button aria-label="nextBtn" onClick={()=>{this.updateCurrentNews(1)}} className="global__nextCategory"></button>
             </div>
           </div>
           <div className="mostViewCategory__slider">

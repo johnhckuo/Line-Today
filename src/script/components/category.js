@@ -16,6 +16,7 @@ export default class Category extends React.Component{
 
     this.categoryId = -1;
     this.subCategoryLength = 0;
+    this.sliderProgressLimit = 8;
 
     this.state = {
       currentSubCategory: 1, 
@@ -122,8 +123,8 @@ export default class Category extends React.Component{
       var sliderProgress = prevState.sliderProgress;
       sliderProgress += increment;
       if (sliderProgress < 0){
-        sliderProgress = 1;
-      }else if (sliderProgress > 1){
+        sliderProgress = this.sliderProgressLimit;
+      }else if (sliderProgress > this.sliderProgressLimit){
         sliderProgress = 0;
       }
       return {sliderProgress};
@@ -131,7 +132,7 @@ export default class Category extends React.Component{
   }
 
   render(){
-    const {categories, categoryList, imageURL, currentCategory, windowWidth} = this.props;
+    const {categories, categoryList, imageURL, currentCategory, windowWidth, device} = this.props;
     this.categoryId = this.props.location.pathname.split("/").pop();
     if (categories.length > 0){
       var category = this.getCategory(categories);
@@ -156,7 +157,7 @@ export default class Category extends React.Component{
         <div className="category">
           <div className="category__container">
             <div className="category__news">
-              <h3 className="global__title">{category.name}</h3>
+              { device != "phone" ? <h3 className="global__title">{category.name}</h3> : null}
               <ul>{firstContent}</ul>
             </div>
             <div className="category__news">
