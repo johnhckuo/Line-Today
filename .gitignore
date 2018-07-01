@@ -59,6 +59,3 @@ typings/
 
 # mac system file
 .DS_Store
-
-#custom files
-src/script/data.js
